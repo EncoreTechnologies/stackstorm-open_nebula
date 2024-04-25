@@ -1,6 +1,6 @@
 ---
 ssl_verify:
-  description: "Verify SSL certificate used with oVirt Server."
+  description: "Verify SSL certificate used with Open Nebula Server."
   type: boolean
   default: True
 
