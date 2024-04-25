@@ -1,0 +1,12 @@
+ssl_verify: false
+open_nebula:
+  default:
+    host: open_nebula.host.dev
+    passwd: password
+    port: 2633
+    user: username
+  open_nebula_prod:
+    host: open_nebula.host.prod
+    passwd: password
+    port: 2633
+    user: username

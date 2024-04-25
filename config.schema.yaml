@@ -1,0 +1,36 @@
+---
+ssl_verify:
+  description: "Verify SSL certificate used with Open Nebula Server."
+  type: boolean
+  default: True
+
+open_nebula:
+  type: "object"
+  required: true
+  patternProperties:
+      "^\\w+":
+        "$ref": "#/properties/servers"
+  additionalProperties: false
+
+servers:
+  type: "object"
+  properties:
+    host:
+      description: "Hostname or IP address of ON Server."
+      type: "string"
+      required: true
+    port:
+      description: "TCP port number for the ON Server."
+      type: "integer"
+      required: true
+    user:
+      description: "Authentication user-id for the ON Server."
+      type: "string"
+      required: true
+    passwd:
+      description: "The password of the specified user."
+      type: "string"
+      secret: true
+      required: true
+  additionalProperties: false
+
