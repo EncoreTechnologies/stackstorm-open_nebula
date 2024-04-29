@@ -17,6 +17,7 @@ from st2common.runners.base_action import Action
 import requests
 import ssl
 import pyone
+import xmlrpc
 
 CONNECTION_ITEMS = ['host', 'port', 'user', 'passwd']
 
@@ -72,6 +73,15 @@ class BaseAction(Action):
                                   session="{}:{}".format(conn['user'], conn['passwd']))
 
         return session
+
+    def xmlrpc_session_create(self, open_nebula):
+        conn = self._get_connection_info(open_nebula)
+        # Create a connection to the server:
+        client = xmlrpc.client.ServerProxy('http://rlponecloud.dev.encore.internal:2633')
+
+        self.auth_string = "{}:{}".format(conn['user'], conn['passwd'])
+
+        return client
 
     def run(self, **kwargs):
         raise RuntimeError("run() not implemented")

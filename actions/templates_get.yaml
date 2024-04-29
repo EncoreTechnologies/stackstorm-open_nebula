@@ -1,0 +1,32 @@
+---
+name: templates_get
+runner_type: python-script
+description: Retrieves a list of details for all or the given templates if any IDs are passed
+enabled: true
+entry_point: objects_get.py
+parameters:
+    api_endpoint:
+        type: string
+        description: ON API endpoint to retrieve objects from (vmpool, hostpool, etc.)
+        required: true
+        default: one.templatepool.info
+    object_ids:
+        type: array
+        description: List of object IDs to return details for
+        required: false
+    object_options:
+        type: array
+        description: List of options to pass into the info function
+        required: true
+        default: [-2, -1, -1]
+    object_type:
+        type: string
+        description: Type of objects to retrieve from Open Nebula (VM, HOST, etc.)
+        required: true
+        default: VMTEMPLATE
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
