@@ -82,5 +82,14 @@ class BaseAction(Action):
 
         return client
 
+    # Search for and return a list of labels on the given VM or an empty list
+    def vm_labels_get(self, vm):
+        labels = []
+        # Labels are found in the USER_TEMPLATE field of the VM
+        for attr,value in vm.USER_TEMPLATE.items():
+            if attr == 'LABELS':
+                labels = value.split(',')
+        return labels
+
     def run(self, **kwargs):
         raise RuntimeError("run() not implemented")

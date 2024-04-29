@@ -3,7 +3,7 @@ name: hosts_get
 runner_type: python-script
 description: Retrieves a list of details for all or the given hosts if any IDs are passed
 enabled: true
-entry_point: objects_get.py
+entry_point: objects_get_from_pool.py
 parameters:
     api_endpoint:
         type: string
