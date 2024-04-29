@@ -76,9 +76,8 @@ class BaseAction(Action):
 
     def xmlrpc_session_create(self, open_nebula):
         conn = self._get_connection_info(open_nebula)
-        # Create a connection to the server:
-        client = xmlrpc.client.ServerProxy('http://rlponecloud.dev.encore.internal:2633')
-
+        # Create a connection to the server
+        client = xmlrpc.client.ServerProxy("http://{}:{}".format(conn['host'], conn['port']))
         self.auth_string = "{}:{}".format(conn['user'], conn['passwd'])
 
         return client
