@@ -1,0 +1,21 @@
+---
+name: vm_snapshot_create
+runner_type: python-script
+description: Create a snapshot of the given VM
+enabled: true
+entry_point: vm_snapshot_create.py
+parameters:
+    snapshot_name:
+        type: string
+        description: Name of the new snapshot
+        required: true
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
