@@ -1,0 +1,17 @@
+---
+name: vm_labels_get
+runner_type: python-script
+description: Retrieves a list of labels on the given VM
+enabled: true
+entry_point: vm_labels_get.py
+parameters:
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
