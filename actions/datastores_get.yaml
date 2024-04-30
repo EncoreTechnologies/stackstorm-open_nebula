@@ -1,7 +1,7 @@
 ---
 name: datastores_get
 runner_type: python-script
-description: Retrieves a list of details for all or the given datastores if any IDs are passed
+description: Retrieves information for all or part of the datastores in the pool or the given datastores if any IDs are passed
 enabled: true
 entry_point: objects_get_from_pool.py
 parameters:

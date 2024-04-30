@@ -1,7 +1,7 @@
 ---
-name: vms_get
+name: vms_get_ext
 runner_type: python-script
-description: Retrieves information for all or part of the VMs in the pool or the given VMs if any IDs are passed
+description: Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed
 enabled: true
 entry_point: objects_get_from_pool.py
 parameters:
@@ -9,7 +9,7 @@ parameters:
         type: string
         description: ON API endpoint to retrieve objects from (vmpool, hostpool, etc.)
         required: true
-        default: one.vmpool.info
+        default: one.vmpool.infoextended
     object_ids:
         type: array
         description: List of object IDs to return details for

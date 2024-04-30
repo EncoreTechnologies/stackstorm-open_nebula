@@ -66,7 +66,7 @@ class BaseAction(Action):
 
         return connection
 
-    def session_create(self, open_nebula):
+    def pyone_session_create(self, open_nebula):
         conn = self._get_connection_info(open_nebula)
         # Create a connection to the server:
         session = pyone.OneServer("http://{}:{}/RPC2".format(conn['host'], conn['port']),
@@ -86,10 +86,19 @@ class BaseAction(Action):
     def vm_labels_get(self, vm):
         labels = []
         # Labels are found in the USER_TEMPLATE field of the VM
-        for attr,value in vm.USER_TEMPLATE.items():
+        for attr, value in vm.USER_TEMPLATE.items():
             if attr == 'LABELS':
                 labels = value.split(',')
         return labels
+
+    def get_all_vm_ids(self, one):
+        # List of options to pass into the info function
+        # https://docs.opennebula.io/6.6/integration_and_development/system_interfaces/api.html#one-vmpool-info
+        vms = one.vmpool.info(-2, -1, -1, -1).VM
+        vm_ids = [int(vm.ID) for vm in vms]
+        vm_ids.sort()
+
+        return vm_ids
 
     def run(self, **kwargs):
         raise RuntimeError("run() not implemented")
