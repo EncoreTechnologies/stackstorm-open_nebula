@@ -1,0 +1,24 @@
+---
+name: vm_attribute_update
+runner_type: python-script
+description: Update the dict of given attributes on the given VM
+enabled: true
+entry_point: vm_attribute_update.py
+parameters:
+    attributes:
+        type: object
+        description: >
+            Object of template attributes to change on a VM
+            Example: {"MEMORY": "4096", "CPU": "2"}
+            More info here: https://docs.opennebula.io/6.8/management_and_operations/references/template.html
+        required: false
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

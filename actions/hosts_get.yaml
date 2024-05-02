@@ -1,0 +1,32 @@
+---
+name: hosts_get
+runner_type: python-script
+description: Retrieves information for all the hosts in the pool or the given hosts if any IDs are passed
+enabled: true
+entry_point: objects_get_from_pool.py
+parameters:
+    api_endpoint:
+        type: string
+        description: ON API endpoint to retrieve objects from (vmpool, hostpool, etc.)
+        required: true
+        default: one.hostpool.info
+    object_ids:
+        type: array
+        description: List of object IDs to return details for
+        required: false
+    object_options:
+        type: array
+        description: List of options to pass into the info function
+        required: true
+        default: []
+    object_type:
+        type: string
+        description: Type of objects to retrieve from Open Nebula (VM, HOST, etc.)
+        required: true
+        default: HOST
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

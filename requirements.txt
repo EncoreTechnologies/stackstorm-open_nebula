@@ -1,2 +1,4 @@
 requests
 pyone
+pybase64
+xmltojson

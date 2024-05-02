@@ -1,0 +1,22 @@
+---
+name: vm_snapshot_delete_age
+runner_type: python-script
+description: Delete snapshots older than a given age
+enabled: true
+entry_point: vm_snapshot_delete_age.py
+parameters:
+    snapshot_age_days:
+        type: integer
+        description: Number of days to automatically delete snapshots after
+        required: true
+        default: 30
+    vm_id:
+        type: integer
+        description: ID of the VM to delete snapshots on. If none then all VMs will be searched
+        required: false
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

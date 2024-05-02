@@ -1,0 +1,21 @@
+---
+name: vm_labels_add
+runner_type: python-script
+description: Append one or more labels to the given VM
+enabled: true
+entry_point: vm_labels_add.py
+parameters:
+    new_labels:
+        type: array
+        description: List of labels to append to the given VM
+        required: true
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
