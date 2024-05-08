@@ -29,6 +29,8 @@ class VmOsGet(BaseAction):
         }
     }
 
+    # If a key from the OS_MAP is found in the name from Open Nebula
+    # then return the OS hash associated with that key
     def get_os_name(self, one_os):
         for attr, value in self.OS_MAP.items():
             if attr in one_os:
