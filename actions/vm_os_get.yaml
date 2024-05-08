@@ -1,0 +1,17 @@
+---
+name: vm_os_get
+runner_type: python-script
+description: Return the OS name of the given VM from the extended info
+enabled: true
+entry_point: vm_os_get.py
+parameters:
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
