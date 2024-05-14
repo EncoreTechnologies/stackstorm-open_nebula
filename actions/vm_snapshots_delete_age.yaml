@@ -1,9 +1,9 @@
 ---
-name: vm_snapshot_delete_age
+name: vm_snapshots_delete_age
 runner_type: python-script
 description: Delete snapshots older than a given age
 enabled: true
-entry_point: vm_snapshot_delete_age.py
+entry_point: vm_snapshots_delete_age.py
 parameters:
     snapshot_age_days:
         type: integer

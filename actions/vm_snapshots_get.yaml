@@ -1,0 +1,17 @@
+---
+name: vm_snapshots_get
+runner_type: python-script
+description: Return a list of snapshots on the given VM
+enabled: true
+entry_point: vm_snapshots_get.py
+parameters:
+    vm_id:
+        type: integer
+        description: ID of the VM to list snapshots from
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

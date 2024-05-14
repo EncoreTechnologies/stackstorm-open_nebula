@@ -17,7 +17,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from lib.action_base import BaseAction
 
-class VmSnapshotDelete(BaseAction):
+class VmSnapshotsDeleteAge(BaseAction):
     # Compare the snapshot timestamp with now - age
     def delete_check(self, utc_timestamp, age_days):
         snap_date = datetime.fromtimestamp(utc_timestamp, timezone.utc)
@@ -36,7 +36,7 @@ class VmSnapshotDelete(BaseAction):
             deleted_snaps = []
             for snap in snapshots:
                 if self.delete_check(int(snap['TIME']), age_days):
-                    #one.vm.snapshotdelete(vm_id, int(snap['ID']))
+                    one.vm.snapshotdelete(vm_id, int(snap['ID']))
                     deleted_snaps.append(snap['NAME'])
                     result[vm.NAME] = deleted_snaps
         
@@ -59,5 +59,4 @@ class VmSnapshotDelete(BaseAction):
                 removed = self.remove_snapshots(one, id, snapshot_age_days)
                 result.update(removed)
 
-        #return one.vm.snapshotcreate(vm_id, snapshot_name)
         return {'deleted_snaps': result}
