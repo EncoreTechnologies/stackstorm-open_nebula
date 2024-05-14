@@ -30,8 +30,8 @@ class VmAttributeGet(BaseAction):
             return_value = json.loads(json.dumps(getattr(vm, attribute_name[0])))
         else:
             return_value = vm
+            # Check the VM for the given attribute and raise an error if it isn't found
             for attr in attribute_name:
-                print(attr)
                 if hasattr(return_value, attr):
                     return_value = json.loads(json.dumps(getattr(return_value, attr)))
                 elif isinstance(return_value, Mapping) and attr in return_value:
