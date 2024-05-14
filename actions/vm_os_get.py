@@ -20,12 +20,12 @@ class VmOsGet(BaseAction):
         'rhel8': {
             'type': 'linux',
             'distro': 'rhel',
-            'version': 8
+            'version': '8'
         },
         'rhel9': {
             'type': 'linux',
             'distro': 'rhel',
-            'version': 9
+            'version': '9'
         }
     }
 
