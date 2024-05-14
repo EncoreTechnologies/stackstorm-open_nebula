@@ -15,7 +15,6 @@
 
 from lib.action_base import BaseAction
 from collections.abc import Mapping
-import xmltojson
 import json
 
 class VmAttributeGet(BaseAction):
