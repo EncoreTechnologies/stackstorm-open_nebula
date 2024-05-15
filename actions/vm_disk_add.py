@@ -21,12 +21,19 @@ import time
 
 class VmDiskAdd(BaseAction):
 
-    def get_vm_id(self, vm_name):
-        vms = self.one.vmpool.info(-2, -1, -1, -1, "NAME={}".format(vm_name))
+    def get_template(self, template_id):
+        templates = self.one.templatepool.info(-2, template_id, template_id)
+        if not templates.VMTEMPLATE:
+            raise Exception("Could not find template with id: {}".format(template_id))
+
+        return templates.VMTEMPLATE[0]
+
+    def get_vm(self, vm_name):
+        vms = self.one.vmpool.infoextended(-2, -1, -1, -1, "NAME={}".format(vm_name))
         if not vms.VM:
             raise Exception("Could not find VM with name: {}".format(vm_name))
 
-        return vms.VM[0].ID
+        return vms.VM[0]
 
     def get_datastore_id(self, datastore_name):
         datastores = self.one.datastorepool.info()
@@ -75,12 +82,46 @@ class VmDiskAdd(BaseAction):
 
         return self.one.vm.attach(vm_id, disk_vector)
 
+    def update_template(self, template, image_id):
+        # Get list of disks on template
+        disks = self.template_disks_get(template)
+
+        # Build DISK strings based on existing info
+        # note: we must use this format according to the onhv docs specified below
+        # https://docs.opennebula.io/6.6/integration_and_development/system_interfaces/python.html#usage
+        disk_attrs = []
+        for disk in disks:
+            disk_attr = "DISK = ["
+
+            for index, (key, value) in enumerate(disk.items()):
+                disk_attr += " {} = {}".format(key, value)
+
+                if index != len(disk) - 1:
+                    disk_attr += " ,"
+            
+            disk_attr += " ]"
+
+            disk_attrs.append(disk_attr)
+
+        # Add new disk attributes
+        disk_attrs.append("DISK = [ IMAGE_ID = {} ]".format(image_id))
+
+        # Build final attributes string, combining old and new
+        attributes = "\n".join([attr for attr in disk_attrs])
+
+        # The '1' here merges the existing template with the given attributes
+        return self.one.template.update(template.ID, attributes, 1)
+
     def run(self, datastore_name, disk_check_timeout, disk_description, disk_format,
             disk_type, disk_name, disk_size_gb, vm_name, open_nebula=None):
-        self.one = self.session_create(open_nebula)
+        # Create pyone session
+        self.one = self.pyone_session_create(open_nebula)
 
-        # Grab the VM ID
-        vm_id = self.get_vm_id(vm_name)
+        # Grab the VM
+        vm = self.get_vm(vm_name)
+
+        # Grab the template
+        template = self.get_template(int(vm.TEMPLATE['TEMPLATE_ID']))
 
         # Grab the datastore ID
         datastore_id = self.get_datastore_id(datastore_name)
@@ -90,6 +131,9 @@ class VmDiskAdd(BaseAction):
                                        disk_format, datastore_id, disk_check_timeout)
 
         # Attach the disk to the VM
-        self.attach_disk(vm_id, image_id, disk_format)
+        self.attach_disk(vm.ID, image_id, disk_format)
+
+        # Update the template with the new disk
+        self.update_template(template, image_id)
 
         return (True, "Disk ID: {}".format(image_id))

@@ -7,7 +7,7 @@ entry_point: vm_disk_add.py
 parameters:
     datastore_name:
         type: string
-        description: Description for new disk
+        description: Name of datastore that the new disk should belong to
         required: true
     disk_check_timeout:
         type: integer

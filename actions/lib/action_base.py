@@ -14,6 +14,7 @@
 # limitations under the License.
 
 from st2common.runners.base_action import Action
+from collections import OrderedDict
 import requests
 import ssl
 import pyone
@@ -90,6 +91,16 @@ class BaseAction(Action):
             if attr == 'LABELS':
                 labels = value.split(',')
         return labels
+
+    # Return all disks associated with the given template
+    def template_disks_get(self, template):
+        disks = template.TEMPLATE['DISK']
+        if type(disks) is OrderedDict:
+            disks = [disks]
+
+        result = [dict(disk) for disk in disks]
+
+        return result
 
     def get_all_vm_ids(self, one):
         # List of options to pass into the info function
