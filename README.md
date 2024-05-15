@@ -70,14 +70,19 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  networks_get  |  Retrieves information for all or part of the virtual networks in the pool or the given virtual networks if any IDs are passed  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
 |  users_get  |  Retrieves information for all the users in the pool or the given users if any IDs are passed  |
+|  vm_attribute_get  |  Return the value of the given attribute from the VM  |
 |  vm_attribute_update  |  Update the dict of given attributes on the given VM  |
 |  vm_labels_add  |  Append one or more labels to the given VM  |
 |  vm_labels_get  |  Retrieves a list of labels on the given VM  |
+|  vm_resize  |  Changes the capacity of CPU, VCPU, and/or MEMORY on the virtual machine  |
 |  vm_snapshot_create  |  Create a snapshot of the given VM  |
-|  vm_snapshot_delete_age  |  Delete snapshots older than a given age  |
+|  vm_snapshot_delete_id  |  Delete a snapshot from the given VM from the ID  |
+|  vm_snapshots_delete_age  |  Delete snapshots older than a given age  |
+|  vm_snapshots_get  |  Return a list of snapshots on the given VM  |
 |  vms_get  |  Retrieves information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 |  vms_get_ext  |  Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 
 ## Example Commands
-`st2 run open_nebula.vm_attribute_update vm_id="5" attributes='{"MEMORY": "4096", "CPU": "2", "LABELS": "ST2,test_label,Label2"}'`
+`st2 run open_nebula.vm_attribute_update vm_id="5" attributes='{"ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'`
+`st2 run open_nebula.vm_resize vm_id="80" mem_mb="4096" vcpu_num="2"`
 
