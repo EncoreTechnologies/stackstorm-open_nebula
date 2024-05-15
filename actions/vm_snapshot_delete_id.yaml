@@ -1,0 +1,21 @@
+---
+name: vm_snapshot_delete_id
+runner_type: python-script
+description: Delete a snapshot from the given VM from the ID
+enabled: true
+entry_point: vm_snapshot_delete_id.py
+parameters:
+    snapshot_id:
+        type: integer
+        description: ID of the snapshot to delete
+        required: true
+    vm_id:
+        type: integer
+        description: ID of the VM to remove snapshots from
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
