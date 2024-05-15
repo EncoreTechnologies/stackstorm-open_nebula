@@ -9,7 +9,7 @@ parameters:
         type: object
         description: >
             Object of template attributes to change on a VM
-            Example: {"MEMORY": "4096", "CPU": "2"}
+            Example: {"ATTR1": "VALUE1", "ATTR2": "1234"}
             More info here: https://docs.opennebula.io/6.8/management_and_operations/references/template.html
         required: false
     vm_id:

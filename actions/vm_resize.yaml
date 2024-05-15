@@ -1,0 +1,32 @@
+---
+name: vm_resize
+runner_type: python-script
+description: Changes the capacity of CPU, VCPU, and/or MEMORY on the virtual machine
+enabled: true
+entry_point: vm_resize.py
+parameters:
+    cpu_num:
+        type: integer
+        description: Number of CPUs to assign to the given VM. 0 means no change
+        required: true
+        default: 0
+    mem_mb:
+        type: integer
+        description: Amount of memory (MB) to assign to the given VM. 0 means no change
+        required: true
+        default: 0
+    vcpu_num:
+        type: integer
+        description: Number of VCPUs to assign to the given VM. 0 means no change
+        required: true
+        default: 0
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
