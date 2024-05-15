@@ -47,8 +47,6 @@ class VmResize(BaseAction):
             <MEMORY>{}</MEMORY>
             <VCPU>{}</VCPU>
         </TEMPLATE>""".format(cpu_num, mem_mb, vcpu_num)
-        
-        print(template_string)
 
         # True below ensures the Host capacity is not overcommitted
         return one.vm.resize(vm_id, template_string, True)
