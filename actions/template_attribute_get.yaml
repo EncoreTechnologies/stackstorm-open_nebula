@@ -1,0 +1,24 @@
+---
+name: template_attribute_get
+runner_type: python-script
+description: Return the value of the given attribute from the template
+enabled: true
+entry_point: template_attribute_get.py
+parameters:
+    attribute_name:
+        type: array
+        description: >
+            Name/path of the attribute on the template. This action returns only 1 value, multiple items
+            in this list will be interpreted as nested keys in the attributes object.
+            e.g. ['TEMPLATE','DISK'] will return the Template's disk info found at temp['TEMPLATE']['DISK']
+        required: true
+    template_id:
+        type: integer
+        description: ID of the VM to get the given attribute for
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
