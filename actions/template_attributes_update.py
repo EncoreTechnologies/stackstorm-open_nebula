@@ -15,13 +15,13 @@
 
 from lib.action_base import BaseAction
 
-class VmAttributeUpdate(BaseAction):
-    def run(self, attributes, vm_id, open_nebula=None):
+class TemplateAttributeUpdate(BaseAction):
+    def run(self, attributes, template_id, open_nebula=None):
         """ Updates the given hash of attributes of the given VM
         Can be used to update CPU, memory, labels, disks, and more:
         https://docs.opennebula.io/6.8/management_and_operations/references/template.html
-        :returns: Return object with the VM ID
+        :returns: Return object with the template ID
         """
         one = self.pyone_session_create(open_nebula)
         # The 1 below merges this new template with the existing one
-        return one.vm.update(vm_id, attributes, 1)
+        return one.template.update(template_id, attributes, 1)

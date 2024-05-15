@@ -1,20 +1,20 @@
 ---
-name: vm_attribute_update
+name: template_attributes_update
 runner_type: python-script
-description: Update the dict of given attributes on the given VM
+description: Update the dict of given attributes on the given template
 enabled: true
-entry_point: vm_attribute_update.py
+entry_point: template_attributes_update.py
 parameters:
     attributes:
         type: object
         description: >
-            Object of template attributes to change on a VM
-            Example: {"ATTR1": "VALUE1", "ATTR2": "1234"}
+            Object of template attributes to change on a template
+            Example: {"MEMORY": "2048", "ATTR2": "VALUE"}
             More info here: https://docs.opennebula.io/6.8/management_and_operations/references/template.html
         required: false
-    vm_id:
+    template_id:
         type: integer
-        description: ID of the VM to update
+        description: ID of the template to update
         required: true
     open_nebula:
         type: string
