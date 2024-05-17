@@ -74,6 +74,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  users_get  |  Retrieves information for all the users in the pool or the given users if any IDs are passed  |
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |
 |  vm_attributes_update  |  Update the dict of given attributes on the given VM  |
+|  vm_get_by_name  |  Retrieves the given VM by name on an Open Nebula system  |
 |  vm_labels_add  |  Append one or more labels to the given VM  |
 |  vm_labels_get  |  Retrieves a list of labels on the given VM  |
 |  vm_resize  |  Changes the capacity of CPU, VCPU, and/or MEMORY on the virtual machine  |
@@ -85,5 +86,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vms_get_ext  |  Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 
 ## Example Commands
+Update custom attributes on a VM: \
 `st2 run open_nebula.vm_attributes_update vm_id="5" attributes='{"ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'` \
+Update memory and CPU on a VM: \
 `st2 run open_nebula.vm_resize vm_id="80" mem_mb="4096" vcpu_num="2"`
