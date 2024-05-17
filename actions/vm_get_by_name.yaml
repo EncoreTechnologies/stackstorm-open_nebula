@@ -1,0 +1,17 @@
+---
+name: vm_get_by_name
+runner_type: python-script
+description: Retrieves the given VM by name on an Open Nebula system.
+enabled: true
+entry_point: vm_get_by_name.py
+parameters:
+    vm_name:
+        type: string
+        description: Name of the VM to return
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
