@@ -17,20 +17,13 @@
 from lib.action_base import BaseAction
 
 
-class VmGetByName(BaseAction):
-    def run(self, vm_name, open_nebula=None):
+class TemplateInstantiate(BaseAction):
+    def run(self, template_id, vm_name, open_nebula=None):
+        """ Instantiates a new virtual machine from a given template ID
+        :returns: ID of the newly instantiated VM
+        """
         one = self.pyone_session_create(open_nebula)
 
-        filter = 'NAME=' + vm_name
         # More info on these params can be found here:
-        # https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html
-        vmpoolInfo = one.vmpool.infoextended(-2, -1, -1, -1, filter)
-        vms = vmpoolInfo.VM
-
-        if len(vms) == 0:
-            raise Exception("ERROR: No VMs found with name: " + vm_name)
-        elif len(vms) > 1:
-            raise Exception("ERROR: Multiple VMs found with name: " + vm_name)
-
-        # If only 1 VM was found then return its template info
-        return vms[0].TEMPLATE
+        # https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-template-instantiate
+        return one.template.instantiate(template_id, vm_name)

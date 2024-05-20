@@ -1,0 +1,21 @@
+---
+name: template_instantiate
+runner_type: python-script
+description: Instantiates a new virtual machine from a given template ID.
+enabled: true
+entry_point: template_instantiate.py
+parameters:
+    template_id:
+        type: integer
+        description: Name of the template to return
+        required: true
+    vm_name:
+        type: string
+        description: Name for the new VM instance
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~

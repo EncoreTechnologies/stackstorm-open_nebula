@@ -1,0 +1,17 @@
+---
+name: template_get_by_name
+runner_type: python-script
+description: Retrieves the given template by name on an Open Nebula system.
+enabled: true
+entry_point: template_get_by_name.py
+parameters:
+    template_name:
+        type: string
+        description: Name of the template to return
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
