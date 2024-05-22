@@ -1,0 +1,19 @@
+---
+description: "Gathers all data for all VMs in Open Nebula"
+enabled: true
+runner_type: "python-script"
+entry_point: data_get_all.py
+name: data_get_all
+pack: open_nebula
+parameters:
+  api_config:
+    type: array
+    description: API parameters for all endpoints that we are gathering data from
+    required: true
+    default: "{{ st2kv.system.open_nebula.data_get_config }}"
+  open_nebula:
+    type: string
+    description: >
+        Pre-Configured ON connection details
+    required: false
+    default: ~
