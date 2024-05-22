@@ -1,0 +1,55 @@
+---
+name: vm_disk_add
+runner_type: python-script
+description: Adds a disk to a VM in Open Nebula
+enabled: true
+entry_point: vm_disk_add.py
+parameters:
+    datastore_name:
+        type: string
+        description: Name of datastore that the new disk should belong to
+        required: true
+    disk_check_timeout:
+        type: integer
+        description: Number of seconds to wait for disk to enter ready state before timing out
+        required: true
+        default: 30
+    disk_description:
+        type: string
+        description: Description for new disk
+        required: false
+    disk_format:
+        type: string
+        description: Format type for the new disk
+        required: false
+        default: qcow2
+        enum:
+            - qcow2
+    disk_type:
+        type: string
+        description: Type of the image
+        required: false
+        default: DATABLOCK
+        enum:
+            - OS
+            - CDROM
+            - DATABLOCK
+    disk_name:
+        type: string
+        description: Name for the new disk
+        required: false
+    disk_size_gb:
+        type: integer
+        description: Size of new Drive in GB
+        required: true
+        default: 40
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
+    vm_name:
+        type: string
+        description: Name of the Virtual Machine as it appears in Open Nebula
+        required: true

@@ -1,0 +1,17 @@
+---
+name: template_disks_get
+runner_type: python-script
+description: Retrieves a list of disks for a template
+enabled: true
+entry_point: template_disks_get.py
+parameters:
+    template_id:
+        type: integer
+        description: ID of the Template
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
