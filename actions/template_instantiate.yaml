@@ -7,7 +7,7 @@ entry_point: template_instantiate.py
 parameters:
     template_id:
         type: integer
-        description: Name of the template to return
+        description: ID of the template to return
         required: true
     vm_name:
         type: string

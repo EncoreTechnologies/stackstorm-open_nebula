@@ -70,6 +70,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  networks_get  |  Retrieves information for all or part of the virtual networks in the pool or the given virtual networks if any IDs are passed  |
 |  template_attribute_get  |  Return the value of the given attribute from the template  |
 |  template_attributes_update  | Update the dict of given attributes on the given template  |
+|  template_delete  |  Deletes the given template from the pool  |
 |  template_get_by_name  |  Retrieves the given template by name on an Open Nebula system  |
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
