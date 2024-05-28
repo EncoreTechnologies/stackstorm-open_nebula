@@ -107,6 +107,6 @@ Update memory and CPU on a VM: \
 `st2 run open_nebula.vm_resize vm_id="80" mem_mb="4096" vcpu_num="2"`
 <br/><br/>
 Power off a VM: \
-`st2 run open_nebula.vm_poweroff vm_id="80"
+`st2 run open_nebula.vm_poweroff vm_id="80"` \
 or: \
 `st2 run open_nebula.vm_action_submit vm_id="221" vm_action="poweroff"`
