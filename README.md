@@ -101,7 +101,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 
 ## Example Commands
 Update custom attributes on a VM: \
-`st2 run open_nebula.vm_attributes_update vm_id="5" attributes='{="ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'`
+`st2 run open_nebula.vm_attributes_update vm_id="5" attributes='{"ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'`
 <br/><br/>
 Update memory and CPU on a VM: \
 `st2 run open_nebula.vm_resize vm_id="80" mem_mb="4096" vcpu_num="2"`
