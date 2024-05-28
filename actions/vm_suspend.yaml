@@ -1,0 +1,27 @@
+---
+name: vm_suspend
+runner_type: python-script
+description: >
+    The VM state is saved in the running Host. When a suspended VM is resumed,
+    it is immediately deployed in the same Host by restoring its saved state.
+enabled: true
+entry_point: vm_action_submit.py
+parameters:
+    vm_action:
+        type: string
+        description: >
+            Action to perform on the given VM. List can be found here:
+            https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-vm-action
+        required: true
+        immutable: true
+        default: suspend
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

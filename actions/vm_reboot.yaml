@@ -1,0 +1,31 @@
+---
+name: vm_reboot
+runner_type: python-script
+description: >
+    Gracefully reboots a running VM, sending the ACPI signal.
+enabled: true
+entry_point: vm_action_submit.py
+parameters:
+    reboot_hard:
+        type: boolean
+        description: Performs a hard reboot.
+        required: true
+        default: false
+    vm_action:
+        type: string
+        description: >
+            Action to perform on the given VM. List can be found here:
+            https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-vm-action
+        required: true
+        immutable: true
+        default: "{{ 'reboot-hard' if reboot_hard else 'reboot' }}"
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
