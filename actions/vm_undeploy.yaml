@@ -1,0 +1,34 @@
+---
+name: vm_undeploy
+runner_type: python-script
+description: >
+    Gracefully shuts down and deletes a running VM, sending the ACPI signal.
+    The Virtual Machine disks are transferred back to the system datastore.
+    When an undeployed VM is resumed, it is be moved to the pending state,
+    and the scheduler will choose where to re-deploy it.
+enabled: true
+entry_point: vm_action_submit.py
+parameters:
+    undeploy_hard:
+        type: boolean
+        description: Immediately destroy the VM without waiting for graceful shutdown
+        required: true
+        default: false
+    vm_action:
+        type: string
+        description: >
+            Action to perform on the given VM. List can be found here:
+            https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-vm-action
+        required: true
+        immutable: true
+        default: "{{ 'undeploy-hard' if undeploy_hard else 'undeploy' }}"
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

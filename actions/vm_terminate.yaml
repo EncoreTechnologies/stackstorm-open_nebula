@@ -1,0 +1,35 @@
+---
+name: vm_terminate
+runner_type: python-script
+description: >
+    Gracefully shuts down and deletes a running VM, sending the ACPI signal.
+    Once the VM is shutdown, the host is cleaned and persistent and deferred-snapshot disks
+    will be moved to the associated datastore.
+    If after a given time the VM is still running (e.g. guest ignoring ACPI signals),
+    OpenNebula will return the VM to the RUNNING state
+enabled: true
+entry_point: vm_action_submit.py
+parameters:
+    terminate_hard:
+        type: boolean
+        description: Immediately destroy the VM without waiting for graceful shutdown
+        required: true
+        default: false
+    vm_action:
+        type: string
+        description: >
+            Action to perform on the given VM. List can be found here:
+            https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-vm-action
+        required: true
+        immutable: true
+        default: "{{ 'terminate-hard' if terminate_hard else 'terminate' }}"
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

@@ -1,0 +1,40 @@
+---
+name: vm_action_submit
+runner_type: python-script
+description: >
+    Run the given action on the given VM. List of available actions can be found at the link below
+enabled: true
+entry_point: vm_action_submit.py
+parameters:
+    vm_action:
+        type: string
+        description: >
+            Action to perform on the given VM. List can be found here:
+            https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html#one-vm-action
+        required: true
+        enum:
+            - hold
+            - poweroff
+            - poweroff-hard
+            - reboot
+            - reboot-hard
+            - release
+            - resched
+            - resume
+            - stop
+            - suspend
+            - terminate
+            - terminate-hard
+            - undeploy
+            - undeploy-hard
+            - unresched
+    vm_id:
+        type: integer
+        description: ID of the VM to update
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

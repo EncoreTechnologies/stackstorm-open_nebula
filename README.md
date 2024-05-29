@@ -74,21 +74,39 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
 |  users_get  |  Retrieves information for all the users in the pool or the given users if any IDs are passed  |
+|  vm_action_submit  |  Run the given onevm action on the given VM. Each onevm action that this can run also has it's own corresponding ST2 action in this pack  |
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |
 |  vm_attributes_update  |  Update the dict of given attributes on the given VM  |
 |  vm_get_by_name  |  Retrieves the given VM by name on an Open Nebula system  |
+|  vm_hold  |  Sets the VM to hold state. The scheduler will not deploy VMs in the hold state  |
 |  vm_labels_add  |  Append one or more labels to the given VM  |
 |  vm_labels_get  |  Retrieves a list of labels on the given VM  |
+|  vm_poweroff  |  Gracefully powers off a running VM by sending the ACPI signal. It is similar to suspend but without saving the VM state  |
+|  vm_reboot  |  Gracefully reboots a running VM, sending the ACPI signal  |
+|  vm_release  |  Releases a VM from hold state, setting it to pending  |
+|  vm_reschedule  |  Sets the reschedule flag for the VM. The Scheduler will migrate the VM in the next monitorization cycle to a Host that better matches the requirements and rank restrictions  |
 |  vm_resize  |  Changes the capacity of CPU, VCPU, and/or MEMORY on the virtual machine  |
+|  vm_resume  |  Resumes the execution of VMs in the stopped, suspended, undeployed and poweroff states  |
 |  vm_snapshot_create  |  Create a snapshot of the given VM  |
 |  vm_snapshot_delete_id  |  Delete a snapshot from the given VM from the ID  |
 |  vm_snapshots_delete_age  |  Delete snapshots older than a given age  |
 |  vm_snapshots_get  |  Return a list of snapshots on the given VM  |
+|  vm_stop  |  Same as undeploy but also the VM state is saved to later resume it  |
+|  vm_suspend  |  The VM state is saved in the running Host. When a suspended VM is resumed, it is immediately deployed in the same Host by restoring its saved state  |
+|  vm_terminate  |  Gracefully shuts down and deletes a running VM, sending the ACPI signal  |
+|  vm_undeploy  |  Gracefully shuts down and deletes a running VM, sending the ACPI signal  |
+|  vm_unreschedule  |  Clears the reschedule flag for the VM, canceling the rescheduling operation  |
 |  vms_get  |  Retrieves information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 |  vms_get_ext  |  Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 
 ## Example Commands
 Update custom attributes on a VM: \
-`st2 run open_nebula.vm_attributes_update vm_id="5" attributes='{"ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'` \
+`st2 run open_nebula.vm_attributes_update vm_id="5" attributes='{"ATTR1": "VALUE1", "LABELS": "ST2,test_label,Label2"}'`
+<br/><br/>
 Update memory and CPU on a VM: \
 `st2 run open_nebula.vm_resize vm_id="80" mem_mb="4096" vcpu_num="2"`
+<br/><br/>
+Power off a VM: \
+`st2 run open_nebula.vm_poweroff vm_id="80"` \
+or: \
+`st2 run open_nebula.vm_action_submit vm_id="221" vm_action="poweroff"`
