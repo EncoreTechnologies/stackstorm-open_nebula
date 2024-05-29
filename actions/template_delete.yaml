@@ -1,0 +1,22 @@
+---
+name: template_delete
+runner_type: python-script
+description: Deletes the given template from the pool
+enabled: true
+entry_point: template_delete.py
+parameters:
+    image_remove:
+        type: boolean
+        description: Whether or not to delete any disk images referenced inside the given template
+        required: true
+        default: false
+    template_id:
+        type: integer
+        description: ID of the template to delete
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~

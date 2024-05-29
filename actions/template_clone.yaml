@@ -1,0 +1,26 @@
+---
+name: template_clone
+runner_type: python-script
+description: Clones an existing virtual machine template
+enabled: true
+entry_point: template_clone.py
+parameters:
+    clone_images:
+        type: boolean
+        description: Whether or not to also clone any images referenced in the given template. They will be cloned to a new Image, and made persistent.
+        required: true
+        default: false
+    new_name:
+        type: string
+        description: Name for the new cloned template
+        required: true
+    template_id:
+        type: integer
+        description: ID of the template to clone
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
