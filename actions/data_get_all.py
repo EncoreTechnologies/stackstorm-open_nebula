@@ -34,12 +34,14 @@ class DataGetAll(BaseAction):
         # Add capacity of all disks on VM
         disk_space = 0.0
         if 'disk' in obj['template']:
-            if isinstance(obj['template']['disk'], list):
-                for disk in obj['template']['disk']:
-                    disk_space += round(int(disk['size']) / 1024, 1)
-                disk_space = round(disk_space, 1)
+            disk = obj['template']['disk']
+            if isinstance(disk, list):
+                disk_space = sum(int(disk_item['size']) / 1024 for disk_item in disk)
             else:
-                disk_space = round(int(obj['template']['disk']['size']) / 1024, 1)
+                disk_space = int(disk['size']) / 1024
+
+        # Round the disk space and add to obj
+        disk_space = round(disk_space, 1)
         obj['template']['disk_space'] = str(disk_space)
 
         # Get number of snapshots on VM
