@@ -17,28 +17,34 @@ from lib.action_base import BaseAction
 import xmltojson
 import json
 
+
 class DataGetAll(BaseAction):
 
     def get_vm_snapshot_count(self, vm):
-        template_info = json.loads(json.dumps(vm['template']))
+        # Get snapshots from VM object, default to empty list if not present
+        snapshots = vm.get('snapshots', {}).get('snapshot', [])
 
-        snapshot_count = 0
-        if 'snapshot' in template_info:
-            snapshot_count = len(template_info['snapshot'])
+        # Convert to list if needed
+        if isinstance(snapshots, dict):
+            snapshots = [snapshots]
 
-        return str(snapshot_count)
+        return len(snapshots)
 
     def filter_vm(self, obj):
-        mem_gb = 0.0
+        # Add capacity of all disks on VM
+        disk_space = 0.0
         if 'disk' in obj['template']:
-            if isinstance(obj['template']['disk'], list):
-                for disk in obj['template']['disk']:
-                    mem_gb += round(int(disk['size']) / 1024, 1)
-                mem_gb = round(mem_gb, 1)
+            disk = obj['template']['disk']
+            if isinstance(disk, list):
+                disk_space = sum(int(disk_item['size']) / 1024 for disk_item in disk)
             else:
-                mem_gb = round(int(obj['template']['disk']['size']) / 1024, 1)
-        obj['template']['mem_gb'] = str(mem_gb)
+                disk_space = int(disk['size']) / 1024
 
+        # Round the disk space and add to obj
+        disk_space = round(disk_space, 1)
+        obj['template']['disk_space'] = str(disk_space)
+
+        # Get number of snapshots on VM
         snapshot_count = self.get_vm_snapshot_count(obj)
         obj['snapshot_count'] = snapshot_count
 
@@ -115,4 +121,4 @@ class DataGetAll(BaseAction):
             objects = self.get_objects(config['endpoint'], config['options'], config['type'])
             all_objs[config['name']] = objects
         
-        return json.dumps(all_objs, sort_keys=True, indent=4, default=str)
+        return all_objs
