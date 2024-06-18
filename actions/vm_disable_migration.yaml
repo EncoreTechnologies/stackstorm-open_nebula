@@ -1,0 +1,21 @@
+---
+name: vm_disable_migration
+runner_type: python-script
+description: Pins a VM to a host to disable migrations
+enabled: true
+entry_point: vm_disable_migration.py
+parameters:
+    host_id:
+        type: string
+        description: Name of the Host as it appears in Open Nebula
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
+    vm_id:
+        type: string
+        description: Name of the Virtual Machine as it appears in Open Nebula
+        required: true
