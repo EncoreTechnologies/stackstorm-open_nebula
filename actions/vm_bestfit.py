@@ -1,9 +1,9 @@
-# Licensed to the StackStorm, Inc ('StackStorm') under one or more
-# contributor license agreements.  See the NOTICE file distributed with
-# this work for additional information regarding copyright ownership.
-# The ASF licenses this file to You under the Apache License, Version 2.0
-# (the "License"); you may not use this file except in compliance with
-# the License.  You may obtain a copy of the License at
+#!/usr/bin/env python
+# Copyright 2024 Encore Technologies
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
 #
 #     http://www.apache.org/licenses/LICENSE-2.0
 #
@@ -27,8 +27,6 @@ class BestFit(BaseAction):
 
     def get_host(self, cluster):
         """Return a host from the given cluster that's powered on and has the least number of VMs
-        :param cluster_name: Name of the cluster to retrieve a host from
-        :returns host_obj: Host object from the given cluster
         """
         host_obj = None
         least_vms = None
@@ -51,19 +49,6 @@ class BestFit(BaseAction):
     def get_storage(self, cluster, datastore_filter_strategy, datastore_filter, disks):
         """Return a datastore on the host that is either specified in the disks variable or
         has the most free space and a name that doesn't match any filters
-        :param cluster: Cluster object to retrieve a datastore from
-        :param datastore_filter: Object containing list of filtersto exclude certain datastores
-          :example: ["string1", "string2"]
-        :param disks: Object containing a list of disks to add to the VM
-          :example:
-            [{
-               "size_gb": "string",
-               "uuid": "string",
-               "datastore": "string",
-               "controller_bus": "string",
-               "scsi_bus": "string"
-            }]
-        :returns datastore: Datastore object from the given host
         """
         datastore = None
 
@@ -103,8 +88,6 @@ class BestFit(BaseAction):
     def filter_datastores(self, ds_name, datastore_filter_strategy, datastore_filter_regex_list):
         """Check if a datastore should be filtered from the list or not.
         If no regex filters are given then all datastores can be used
-        :param ds_name: Name of the datastore to check filters for
-        :param datastore_filter: Array containing list of filters to exclude certain datastores
         :returns boolean: True if the datastore name does NOT match any of the regex expressions
         """
         if datastore_filter_regex_list is None:
@@ -125,18 +108,9 @@ class BestFit(BaseAction):
     def run(self, cluster_name, datastore_filter_strategy, datastore_filter_regex_list,
             disks, open_nebula=None):
         """
-        Returns a host and datastore name and MOID from the given cluster and filters.
+        Returns a host and datastore name and ID from the given cluster and filters.
         The result host will be the one with the least amount of VMs and the result
         datastore will be the one with the most free space
-
-        Args:
-        - cluster_name: Name of the cluster in vSphere to get a host from
-        - datastore_filter_regex_list: List of regular expressions to filter the list of datastores
-        - disks: List of disks to attach to a new VM
-        - open_nebula: Pre-Configured open nebula connection details
-
-        Returns:
-        - dict: key value pairs with calculated host and datastore names and ids
         """
         # Create pyone session
         self.one = self.pyone_session_create(open_nebula)
