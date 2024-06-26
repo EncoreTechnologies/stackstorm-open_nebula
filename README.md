@@ -79,6 +79,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vm_action_submit  |  Run the given onevm action on the given VM. Each onevm action that this can run also has it's own corresponding ST2 action in this pack  |
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |
 |  vm_attributes_update  |  Update the dict of given attributes on the given VM  |
+|  vm_bestfit  |  Determine the best host and datastore to provision a new VM to on a given cluster  |
 |  vm_get_by_name  |  Retrieves the given VM by name on an Open Nebula system  |
 |  vm_hold  |  Sets the VM to hold state. The scheduler will not deploy VMs in the hold state  |
 |  vm_labels_add  |  Append one or more labels to the given VM  |
