@@ -1,14 +1,10 @@
 ---
-name: vm_disable_migration
+name: vm_unlock
 runner_type: python-script
-description: Pins a VM to a host to disable migrations
+description: Unocks a VM from a locked state
 enabled: true
-entry_point: vm_disable_migration.py
+entry_point: vm_unlock.py
 parameters:
-    host_id:
-        type: string
-        description: Name of the Host as it appears in Open Nebula
-        required: true
     open_nebula:
         type: string
         description: >
