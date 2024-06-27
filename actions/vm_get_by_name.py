@@ -27,10 +27,4 @@ class VmGetByName(BaseAction):
         vmpoolInfo = one.vmpool.infoextended(-2, -1, -1, -1, filter)
         vms = vmpoolInfo.VM
 
-        if len(vms) == 0:
-            raise Exception("ERROR: No VMs found with name: " + vm_name)
-        elif len(vms) > 1:
-            raise Exception("ERROR: Multiple VMs found with name: " + vm_name)
-
-        # If only 1 VM was found then return its template info
-        return vms[0].TEMPLATE
+        return [vm.TEMPLATE for vm in vms]
