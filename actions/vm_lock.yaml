@@ -1,0 +1,17 @@
+---
+name: vm_lock
+runner_type: python-script
+description: Locks a VM from having actions performed on it
+enabled: true
+entry_point: vm_lock.py
+parameters:
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
+    vm_id:
+        type: string
+        description: Name of the Virtual Machine as it appears in Open Nebula
+        required: true

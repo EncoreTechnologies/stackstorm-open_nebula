@@ -1,0 +1,17 @@
+---
+name: vm_unlock
+runner_type: python-script
+description: Unocks a VM from a locked state
+enabled: true
+entry_point: vm_unlock.py
+parameters:
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
+    vm_id:
+        type: string
+        description: Name of the Virtual Machine as it appears in Open Nebula
+        required: true
