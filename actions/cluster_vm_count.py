@@ -16,8 +16,8 @@
 
 from lib.action_base import BaseAction
 
-class OpenNebulaHostCount(BaseAction):
-    
+class OpenNebulaVMCount(BaseAction):
+
     def run(self, open_nebula=None):
 
         one = self.pyone_session_create(open_nebula)
@@ -27,12 +27,18 @@ class OpenNebulaHostCount(BaseAction):
         return_value = {}
         for clst in clusters:
             cluster_value = {}
+            vm_count = 0
             if isinstance(clst.HOSTS.ID, list):
-                cluster_value["host_list"] = clst.HOSTS.ID
-                cluster_value["host_count"] = len(clst.HOSTS.ID)
+                cluster_value = clst.HOSTS.ID
+                for host_id in cluster_value:
+                    host = one.host.info(host_id)
+                    vm_count += len(host.VMS.ID)
+
             else:
-                cluster_value["host_list"] = [clst.HOSTS.ID]
-                cluster_value["host_count"] = 1
-            return_value[clst.NAME] = cluster_value
+                cluster_value = [clst.HOSTS.ID]
+                host = one.host.info(cluster_value)
+                vm_count = len(host.VMS.ID)
+
+            return_value[clst.NAME] = vm_count
 
         return return_value
