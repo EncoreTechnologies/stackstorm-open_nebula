@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class VmAttributesUpdate(BaseAction):
     def run(self, attributes, vm_id, open_nebula=None):
         """ Updates the given hash of attributes of the given VM

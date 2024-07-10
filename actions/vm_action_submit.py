@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class VmActionSubmit(BaseAction):
     def run(self, **kwargs):
         """ Submits a given action to be performed on a given virtual machine

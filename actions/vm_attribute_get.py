@@ -17,6 +17,7 @@ from lib.action_base import BaseAction
 from collections.abc import Mapping
 import json
 
+
 class VmAttributeGet(BaseAction):
     def run(self, attribute_name, vm_id, open_nebula=None):
         """ Return the value of the given attribute from the VM

@@ -59,7 +59,6 @@ class BestFit(BaseAction):
             # If the disks variable is given and it's datastore key is not "automatic" then
             # the datastore from the disks variable will be returned
             if datastore_name != "automatic":
-                #atastores = self.one.datastorepool.info()
                 for ds_id in cluster.DATASTORES.ID:
                     ds = self.one.datastore.info(ds_id)
                     if ds.NAME == datastore_name:
@@ -116,7 +115,7 @@ class BestFit(BaseAction):
         self.one = self.pyone_session_create(open_nebula)
 
         clusters = self.one.clusterpool.info()
-    
+
         cluster = None
         for clst in clusters.CLUSTER:
             if clst.NAME == cluster_name:

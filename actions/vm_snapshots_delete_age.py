@@ -17,6 +17,7 @@ import json
 from datetime import datetime, timedelta, timezone
 from lib.action_base import BaseAction
 
+
 class VmSnapshotsDeleteAge(BaseAction):
     # Compare the snapshot timestamp with now - age
     def delete_check(self, utc_timestamp, age_days):
@@ -39,7 +40,7 @@ class VmSnapshotsDeleteAge(BaseAction):
                     one.vm.snapshotdelete(vm_id, int(snap['ID']))
                     deleted_snaps.append(snap['NAME'])
                     result[vm.NAME] = deleted_snaps
-        
+
         return result
 
     def run(self, snapshot_age_days, vm_id, open_nebula=None):
