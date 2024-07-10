@@ -17,8 +17,9 @@ from lib.action_base import BaseAction
 import xmltojson
 import json
 
+
 class ObjectsGetFromPool(BaseAction):
-    
+
     def run(self, api_endpoint, object_ids, object_options, object_type, open_nebula=None):
         xmlrpc_session = self.xmlrpc_session_create(open_nebula)
 
@@ -35,7 +36,7 @@ class ObjectsGetFromPool(BaseAction):
                 objects = [objects]
         else:
             raise Exception(response[1])
-        
+
         if object_ids:
             result = []
             # Convert any integers to be compared with the string response

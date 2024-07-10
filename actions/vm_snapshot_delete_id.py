@@ -15,10 +15,11 @@
 
 from lib.action_base import BaseAction
 
+
 class VmSnapshotDeleteId(BaseAction):
     def run(self, snapshot_id, vm_id, open_nebula=None):
         """ Delete a snapshot from the given VM from the ID
-        :returns: Result from delete API method 
+        :returns: Result from delete API method
         """
         one = self.pyone_session_create(open_nebula)
 

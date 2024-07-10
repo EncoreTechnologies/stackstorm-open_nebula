@@ -1,0 +1,7 @@
+---
+ssl_verify: false
+open_nebula:
+  default:
+    host: test.com
+    passwd: passwd
+    port: 2633

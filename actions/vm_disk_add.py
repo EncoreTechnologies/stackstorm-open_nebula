@@ -12,10 +12,7 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
-import requests
 from lib.action_base import BaseAction
-
 import time
 
 
@@ -98,7 +95,7 @@ class VmDiskAdd(BaseAction):
 
                 if index != len(disk) - 1:
                     disk_attr += " ,"
-            
+
             disk_attr += " ]"
 
             disk_attrs.append(disk_attr)

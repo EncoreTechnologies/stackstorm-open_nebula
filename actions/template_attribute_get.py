@@ -17,6 +17,7 @@ from lib.action_base import BaseAction
 from collections.abc import Mapping
 import json
 
+
 class TemplateAttributeGet(BaseAction):
     def run(self, attribute_name, template_id, open_nebula=None):
         """ Return the value of the given attribute from the template
@@ -36,6 +37,7 @@ class TemplateAttributeGet(BaseAction):
                 elif isinstance(return_value, Mapping) and attr in return_value:
                     return_value = return_value[attr]
                 else:
-                    raise ValueError("Given attribute: {} not found on Template: {}".format(attr, template_id))
+                    raise ValueError("Given attribute: {} not found on Template: {}".format(
+                        attr, template_id))
 
         return return_value

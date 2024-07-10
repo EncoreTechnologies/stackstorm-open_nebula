@@ -1,0 +1,13 @@
+---
+ssl_verify: false
+open_nebula:
+  default:
+    host: test.com
+    passwd: passwd
+    port: 2633
+    user: user
+  onecloud.com:
+    host: onecloud.com
+    passwd: passwd
+    port: 2633
+    user: user

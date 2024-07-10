@@ -120,5 +120,5 @@ class DataGetAll(BaseAction):
         for config in api_config:
             objects = self.get_objects(config['endpoint'], config['options'], config['type'])
             all_objs[config['name']] = objects
-        
+
         return all_objs

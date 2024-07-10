@@ -16,6 +16,7 @@
 import json
 from lib.action_base import BaseAction
 
+
 class VmSnapshotGet(BaseAction):
     def run(self, vm_id, open_nebula=None):
         """ Return a list of snapshots on the given VM

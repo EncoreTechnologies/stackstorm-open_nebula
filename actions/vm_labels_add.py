@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class VmLabelsAdd(BaseAction):
     def run(self, new_labels, vm_id, open_nebula=None):
         """ Append one or more labels to the given VM

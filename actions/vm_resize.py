@@ -12,9 +12,9 @@
 # WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 # See the License for the specific language governing permissions and
 # limitations under the License.
-
 import json
 from lib.action_base import BaseAction
+
 
 class VmResize(BaseAction):
     # Open Nebula does not allow allocating less memory or CPU than the template
@@ -23,12 +23,14 @@ class VmResize(BaseAction):
         temp = json.loads(json.dumps(temp.TEMPLATE))
         # Any values that are 0 will be ignored by the API
         if cpu_num > 0 and cpu_num < int(temp['CPU']):
-            raise ValueError("Cannot allocate less CPUs than the template: {}".format(temp['CPU']))
+            raise ValueError("Cannot allocate less CPUs than the template: {}".format(
+                temp['CPU']))
         if mem_mb > 0 and mem_mb < int(temp['MEMORY']):
-            raise ValueError("Cannot allocate less memory than the template: {}".format(temp['MEMORY']))
+            raise ValueError("Cannot allocate less memory than the template: {}".format(
+                temp['MEMORY']))
         if vcpu_num > 0 and vcpu_num < int(temp['VCPU']):
-            raise ValueError("Cannot allocate less VCPUs than the template: {}".format(temp['VCPU']))
-
+            raise ValueError("Cannot allocate less VCPUs than the template: {}".format(
+                temp['VCPU']))
 
     def run(self, cpu_num, mem_mb, vcpu_num, vm_id, open_nebula=None):
         """ Changes the capacity of CPU, VCPU, and/or MEMORY on the virtual machine

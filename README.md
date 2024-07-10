@@ -72,6 +72,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  template_attributes_update  | Update the dict of given attributes on the given template  |
 |  template_clone  |  Clones an existing virtual machine template  |
 |  template_delete  |  Deletes the given template from the pool  |
+|  template_disks_get  |  Return a list of disks on the given template  |
 |  template_get_by_name  |  Retrieves the given template by name on an Open Nebula system  |
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
@@ -80,10 +81,12 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |
 |  vm_attributes_update  |  Update the dict of given attributes on the given VM  |
 |  vm_bestfit  |  Determine the best host and datastore to provision a new VM to on a given cluster  |
+|  vm_disk_add  |  Adds a disk to a VM in Open Nebula  |
 |  vm_get_by_name  |  Retrieves the given VM by name on an Open Nebula system  |
 |  vm_hold  |  Sets the VM to hold state. The scheduler will not deploy VMs in the hold state  |
 |  vm_labels_add  |  Append one or more labels to the given VM  |
 |  vm_labels_get  |  Retrieves a list of labels on the given VM  |
+|  vm_lock  |  Locks a VM from having actions performed on it  |
 |  vm_poweroff  |  Gracefully powers off a running VM by sending the ACPI signal. It is similar to suspend but without saving the VM state  |
 |  vm_reboot  |  Gracefully reboots a running VM, sending the ACPI signal  |
 |  vm_release  |  Releases a VM from hold state, setting it to pending  |
@@ -98,6 +101,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vm_suspend  |  The VM state is saved in the running Host. When a suspended VM is resumed, it is immediately deployed in the same Host by restoring its saved state  |
 |  vm_terminate  |  Gracefully shuts down and deletes a running VM, sending the ACPI signal  |
 |  vm_undeploy  |  Gracefully shuts down and deletes a running VM, sending the ACPI signal  |
+|  vm_unlock  |  Unocks a VM from a locked state  |
 |  vm_unreschedule  |  Clears the reschedule flag for the VM, canceling the rescheduling operation  |
 |  vms_get  |  Retrieves information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 |  vms_get_ext  |  Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
