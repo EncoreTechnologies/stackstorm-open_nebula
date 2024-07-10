@@ -14,7 +14,6 @@
 # limitations under the License.
 from one_base_action_test_case import OneBaseActionTestCase
 from lib.action_base import BaseAction
-import unittest.mock
 
 __all__ = [
     'BaseActionTestCase'
