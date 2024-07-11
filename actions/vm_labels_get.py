@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class VmLabelsGet(BaseAction):
     def run(self, vm_id, open_nebula=None):
         """ Return a list of labels on the given VM

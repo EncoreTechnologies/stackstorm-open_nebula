@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class VmSnapshotCreate(BaseAction):
     def run(self, snapshot_name, vm_id, open_nebula=None):
         """ Create a snapshot of the given VM

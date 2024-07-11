@@ -15,6 +15,7 @@
 
 from lib.action_base import BaseAction
 
+
 class TemplateAttributeUpdate(BaseAction):
     def run(self, attributes, template_id, open_nebula=None):
         """ Updates the given hash of attributes of the given VM
