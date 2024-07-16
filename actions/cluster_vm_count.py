@@ -24,7 +24,7 @@ class OpenNebulaVMCount(BaseAction):
         clustersInfo = one.clusterpool.info()
         clusters = clustersInfo.CLUSTER
 
-        return_value = {}
+        result = {}
         for clst in clusters:
             cluster_value = {}
             vm_count = 0
@@ -39,6 +39,6 @@ class OpenNebulaVMCount(BaseAction):
                 host = one.host.info(cluster_value)
                 vm_count = len(host.VMS.ID)
 
-            return_value[clst.NAME] = vm_count
+            result[clst.NAME] = vm_count
 
-        return return_value
+        return result
