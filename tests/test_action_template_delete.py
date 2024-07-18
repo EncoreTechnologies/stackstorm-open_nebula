@@ -41,4 +41,5 @@ class TemplateDeleteTestCase(OneBaseActionTestCase):
         # Verify result and calls
         self.assertEqual(expected_result, result)
         mock_session.assert_called_with(open_nebula)
+
         
