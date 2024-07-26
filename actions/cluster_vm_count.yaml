@@ -1,0 +1,13 @@
+---
+name: cluster_vm_count
+runner_type: python-script
+description: Retrieves the hosts on an Open Nebula system.
+enabled: true
+entry_point: cluster_vm_count.py
+parameters:
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
