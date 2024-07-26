@@ -26,6 +26,7 @@ class TemplateDeleteTestCase(OneBaseActionTestCase):
     __test__ = True
     action_cls = TemplateDelete
 
+    
     @mock.patch("lib.action_base.BaseAction.pyone_session_create")
     def test_run(self, mock_session):
         action = self.get_action_instance(self._config_good)
