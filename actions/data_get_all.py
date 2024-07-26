@@ -75,7 +75,7 @@ class DataGetAll(BaseAction):
 
         # Get the filter function based on object type
         for obj in objects:
-            if object_type == 'CLUSTER':
+            if object_type in ['CLUSTER', 'VMTEMPLATE', 'IMAGE']:
                 continue
 
             filter_function = filter_functions.get(object_type)

@@ -1,0 +1,17 @@
+---
+name: templates_get_with_label
+runner_type: python-script
+description: Retrieves a list of templates that have the given label
+enabled: true
+entry_point: templates_get_with_label.py
+parameters:
+    label_name:
+        type: string
+        description: Name of the label to return a list of templates with
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
