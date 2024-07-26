@@ -67,6 +67,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  clusters_get  |  Retrieves information for all the clusters in the pool or the given clusters if any IDs are passed  |
 |  datastores_get  |  Retrieves information for all or part of the datastores in the pool or the given datastores if any IDs are passed  |
 |  hosts_get  |  Retrieves information for all the hosts in the pool or the given hosts if any IDs are passed  |
+|  images_get  |  Retrieves information for all or part of the images in the pool or the given image if any IDs are passed  |
 |  networks_get  |  Retrieves information for all or part of the virtual networks in the pool or the given virtual networks if any IDs are passed  |
 |  template_attribute_get  |  Return the value of the given attribute from the template  |
 |  template_attributes_update  | Update the dict of given attributes on the given template  |
@@ -76,6 +77,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  template_get_by_name  |  Retrieves the given template by name on an Open Nebula system  |
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
+|  templates_get_with_label  |  Retrieves a list of templates that have the given label  |
 |  users_get  |  Retrieves information for all the users in the pool or the given users if any IDs are passed  |
 |  vm_action_submit  |  Run the given onevm action on the given VM. Each onevm action that this can run also has it's own corresponding ST2 action in this pack  |
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |
