@@ -30,7 +30,7 @@ class DataGetAll(BaseAction):
 
         return len(snapshots)
 
-    def filter_vm(self, obj):
+    def update_vm(self, obj):
         # Add capacity of all disks on VM
         disk_space = 0.0
         if 'disk' in obj['template']:
@@ -50,38 +50,71 @@ class DataGetAll(BaseAction):
 
         return obj
 
-    def filter_datastore(self, obj):
+    def update_datastore(self, obj):
         obj['capacity_gb'] = str(round(int(obj['total_mb']) / 1024, 1))
         return obj
 
-    def filter_host(self, obj):
+    def update_host(self, obj):
         if 'numa_nodes' in obj['host_share']:
             obj['host_share'].pop('numa_nodes')
         obj['host_share']['cpu_ghz'] = str(round(int(obj['host_share']['total_cpu']) / 1000, 2))
         obj['host_share']['mem_gb'] = str(round(int(obj['host_share']['total_mem']) / 1024**2, 1))
         return obj
 
-    def filter_network(self, obj):
+    def update_network(self, obj):
         return obj
+
+    def update_objects(self, objects, object_type):
+        # define update functions
+        update_functions = {
+            'VM': self.update_vm,
+            'DATASTORE': self.update_datastore,
+            'HOST': self.update_host,
+            'VNET': self.update_network
+        }
+
+        # Get the update function based on object type
+        for obj in objects:
+            if object_type not in update_functions.keys():
+                continue
+
+            update_function = update_functions.get(object_type)
+            obj = update_function(obj)
+
+        return objects
+
+    def filter_templates(self, templates):
+        # If no label filters were passed then return all templates
+        if self.template_label_filters and len(self.template_label_filters) > 0:
+            label_temps = []
+            for temp in templates:
+                try:
+                    labels = temp['template']['labels']
+                    vm_labels = labels.split(',')
+                except KeyError:
+                    vm_labels = []
+
+                if any(x in vm_labels for x in self.template_label_filters):
+                    label_temps.append(temp)
+        else:
+            label_temps = templates
+
+        return label_temps
 
     def filter_objects(self, objects, object_type):
         # define filter functions
         filter_functions = {
-            'VM': self.filter_vm,
-            'DATASTORE': self.filter_datastore,
-            'HOST': self.filter_host,
-            'VNET': self.filter_network
+            'VMTEMPLATE': self.filter_templates
         }
 
         # Get the filter function based on object type
-        for obj in objects:
-            if object_type in ['CLUSTER', 'VMTEMPLATE', 'IMAGE']:
-                continue
+        if object_type not in filter_functions.keys():
+            return objects
 
-            filter_function = filter_functions.get(object_type)
-            obj = filter_function(obj)
+        filter_function = filter_functions.get(object_type)
+        filtered_objs = filter_function(objects)
 
-        return objects
+        return filtered_objs
 
     def get_objects(self, endpoint, object_options, object_type):
         method = getattr(self.session, endpoint)
@@ -97,11 +130,14 @@ class DataGetAll(BaseAction):
         else:
             raise Exception(response[1])
 
-        # All  keys from the API are capitalized by default, so we change them to lowercase here
+        # All keys from the API are capitalized by default, so we change them to lowercase here
         lowercase_objects = self.lowercase_keys(objects)
 
         # filter objects
-        return_objects = self.filter_objects(lowercase_objects, object_type)
+        filtered_objects = self.filter_objects(lowercase_objects, object_type)
+
+        # update objects
+        return_objects = self.update_objects(filtered_objects, object_type)
 
         return return_objects
 
@@ -113,8 +149,9 @@ class DataGetAll(BaseAction):
         else:
             return obj
 
-    def run(self, api_config, open_nebula=None):
+    def run(self, api_config, template_label_filters, open_nebula=None):
         self.session = self.xmlrpc_session_create(open_nebula)
+        self.template_label_filters = template_label_filters
 
         all_objs = {}
         for config in api_config:
