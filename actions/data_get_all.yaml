@@ -11,6 +11,11 @@ parameters:
     description: API parameters for all endpoints that we are gathering data from
     required: true
     default: "{{ st2kv.system.open_nebula.data_get_config }}"
+  template_label_filters:
+    type: array
+    description: Only return templates that have a label from this list
+    required: true
+    default: []
   open_nebula:
     type: string
     description: >
