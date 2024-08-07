@@ -13,6 +13,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
+from dict2xml import dict2xml
 from lib.action_base import BaseAction
 
 
@@ -24,5 +25,6 @@ class TemplateAttributeUpdate(BaseAction):
         :returns: Return object with the template ID
         """
         one = self.pyone_session_create(open_nebula)
+        xml = dict2xml({'TEMPLATE': attributes})
         # The 1 below merges this new template with the existing one
-        return one.template.update(template_id, attributes, 1)
+        return one.template.update(template_id, xml, 1)
