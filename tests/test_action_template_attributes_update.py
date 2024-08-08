@@ -26,23 +26,27 @@ class TemplateAttributeUpdateTestCase(OneBaseActionTestCase):
     __test__ = True
     action_cls = TemplateAttributeUpdate
 
+    @mock.patch("template_attributes_update.dict2xml")
     @mock.patch("lib.action_base.BaseAction.pyone_session_create")
-    def test_run(self, mock_session):
+    def test_run(self, mock_session, mock_dict2xml):
         action = self.get_action_instance(self._config_good)
 
         # Define test parameters
         attributes = {'ATTR': 'VALUE'}
         template_id = 0
         open_nebula = 'default'
+        test_xml = 'xml string'
         expected_result = 'result'
 
         # Mock one object and run action
         mock_one = mock.Mock()
         mock_one.template.update.return_value = expected_result
+        mock_dict2xml.return_value = test_xml
         mock_session.return_value = mock_one
         result = action.run(attributes, template_id, open_nebula)
 
         # Verify result and calls
         self.assertEqual(expected_result, result)
         mock_session.assert_called_with(open_nebula)
-        mock_one.template.update.assert_called_with(template_id, attributes, 1)
+        mock_dict2xml.assert_called_with({'TEMPLATE': attributes})
+        mock_one.template.update.assert_called_with(template_id, test_xml, 1)

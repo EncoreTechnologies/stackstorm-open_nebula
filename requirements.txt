@@ -2,3 +2,4 @@ requests
 pyone
 pybase64
 xmltojson
+dict2xml
