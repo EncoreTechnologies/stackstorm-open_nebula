@@ -1,0 +1,39 @@
+---
+name: vm_nic_attach
+runner_type: python-script
+description: Attaches a nic to the given VM
+enabled: true
+entry_point: vm_nic_attach.py
+parameters:
+    attach_timeout:
+        type: integer
+        description: How long to wait to confirm the nic is attached
+        required: false
+        default: 30
+    gateway:
+        type: string
+        description: Gateway to specify for the NIC
+        required: true
+    ip_addr:
+        type: string
+        description: IP Address to specify for the NIC
+        required: true
+    method:
+        type: string
+        description: Method to specify for the NIC
+        required: false
+        default: "static"
+    network_id:
+        type: integer
+        description: ID of the Network in Open Nebula to use for the NIC
+        required: true
+    vm_id:
+        type: integer
+        description: ID of the VM in Open Nebula
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~

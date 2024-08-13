@@ -1,0 +1,26 @@
+---
+name: vm_nic_detach
+runner_type: python-script
+description: Detaches a nic from the given VM
+enabled: true
+entry_point: vm_nic_detach.py
+parameters:
+    detach_timeout:
+        type: integer
+        description: How long to wait to confirm the nic is detached
+        required: false
+        default: 30
+    nic_id:
+        type: integer
+        description: ID of the nic on the VM that we want to detach
+        required: true
+    vm_id:
+        type: integer
+        description: ID of the VM to detach the nic from
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~

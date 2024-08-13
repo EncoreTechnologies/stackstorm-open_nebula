@@ -16,6 +16,7 @@
 from st2common.runners.base_action import Action
 from collections import OrderedDict
 import requests
+import time
 import ssl
 import pyone
 import xmlrpc
@@ -110,6 +111,24 @@ class BaseAction(Action):
         vm_ids.sort()
 
         return vm_ids
+    
+    def wait_for_vm(self, one, vm_id, timeout=30):
+        # Wait for VM to enter LCM State of 3 = 'running'
+        lcm_state = one.vm.info(vm_id).LCM_STATE
+        start_time = time.time()
+        while lcm_state != 3:
+            # Set elapsed time for timeout check
+            elapsed_time = time.time() - start_time
+            if elapsed_time > timeout:
+                return lcm_state
+
+            # Wait before checking again
+            time.sleep(5)
+
+            # Update the image state for next check
+            lcm_state = one.vm.info(vm_id).LCM_STATE
+
+        return lcm_state
 
     def run(self, **kwargs):
         raise RuntimeError("run() not implemented")
