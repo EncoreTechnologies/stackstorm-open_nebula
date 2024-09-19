@@ -20,7 +20,7 @@ class VmGetByName(BaseAction):
     def run(self, vm_name, open_nebula=None):
         one = self.pyone_session_create(open_nebula)
 
-        filter = 'NAME=' + vm_name
+        filter = 'VM.NAME=' + vm_name
         # More info on these params can be found here:
         # https://docs.opennebula.io/6.8/integration_and_development/system_interfaces/api.html
         vmpoolInfo = one.vmpool.infoextended(-2, -1, -1, -1, filter)
