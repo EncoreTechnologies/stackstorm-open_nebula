@@ -105,6 +105,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vm_undeploy  |  Gracefully shuts down and deletes a running VM, sending the ACPI signal  |
 |  vm_unlock  |  Unocks a VM from a locked state  |
 |  vm_unreschedule  |  Clears the reschedule flag for the VM, canceling the rescheduling operation  |
+|  vms_attribute_get  |  Checks a list of vms for a given attribute  |
 |  vms_get  |  Retrieves information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 |  vms_get_ext  |  Retrieves extended information for all or part of the VMs in the pool or the given VMs if any IDs are passed |
 
