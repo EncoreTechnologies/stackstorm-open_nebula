@@ -104,7 +104,7 @@ class VmDiskAdd(BaseAction):
         if os_type == "linux":
             disk_attrs.append("DISK = [ IMAGE_ID = {} ]".format(image_id))
         elif os_type == "windows":
-            virtio_options = "DEV_PREFIX = vd , BUS = virtio"
+            virtio_options = "DEV_PREFIX = vd , TARGET = vda , BUS = virtio"
             disk_attrs.append("DISK = [ IMAGE_ID = {} , {} ]".format(image_id, virtio_options))
 
         # Build final attributes string, combining old and new
