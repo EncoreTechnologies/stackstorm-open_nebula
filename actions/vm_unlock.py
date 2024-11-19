@@ -21,4 +21,4 @@ class VmUnlock(BaseAction):
         self.one = self.pyone_session_create(open_nebula)
 
         # Update the VM with the new scheduling requirement
-        return self.one.vm.unlock(int(vm_id))
+        return self.one.vm.unlock(vm_id)

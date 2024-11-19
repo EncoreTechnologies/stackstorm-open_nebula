@@ -13,12 +13,11 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from one_base_action_test_case import OneBaseActionTestCase
-
 from cluster_host_count import OpenNebulaHostCount
 import unittest.mock as mock
 
 __all__ = [
-    'OpenNebulaHostCountTestCount'
+    'OpenNebulaHostCountTestCase'
 ]
 
 
@@ -45,11 +44,11 @@ class OpenNebulaHostCountTestCase(OneBaseActionTestCase):
         test_clusters = [mock_cluster1, mock_cluster2]
         open_nebula = "default"
         expected_result = {'mockcluster1':
-                            {'host_count': 2,
-                             'host_list': [mock_host1, mock_host2]}, 
-                           'mockcluster2': 
-                            {'host_count': 2,
-                             'host_list': [mock_host3, mock_host4]}}
+                           {'host_count': 2,
+                            'host_list': [mock_host1, mock_host2]},
+                           'mockcluster2':
+                           {'host_count': 2,
+                            'host_list': [mock_host3, mock_host4]}}
 
         # Mock one object and run action
         mock_one = mock.Mock()
@@ -81,11 +80,11 @@ class OpenNebulaHostCountTestCase(OneBaseActionTestCase):
         test_clusters = [mock_cluster1, mock_cluster2]
         open_nebula = "default"
         expected_result = {'mockcluster1':
-                            {'host_count': 1,
-                             'host_list': [mock_host1]}, 
-                           'mockcluster2': 
-                            {'host_count': 1,
-                             'host_list': [mock_host2]}}
+                           {'host_count': 1,
+                            'host_list': [mock_host1]},
+                           'mockcluster2':
+                           {'host_count': 1,
+                            'host_list': [mock_host2]}}
 
         # Mock one object and run action
         mock_one = mock.Mock()

@@ -26,7 +26,7 @@ class VmDiskAdd(BaseAction):
         return templates.VMTEMPLATE[0]
 
     def get_vm(self, vm_name):
-        vms = self.one.vmpool.infoextended(-2, -1, -1, -1, "NAME={}".format(vm_name))
+        vms = self.one.vmpool.infoextended(-2, -1, -1, -1, "VM.NAME={}".format(vm_name))
         if not vms.VM:
             raise Exception("Could not find VM with name: {}".format(vm_name))
 

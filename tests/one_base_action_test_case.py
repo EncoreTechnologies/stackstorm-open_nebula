@@ -28,6 +28,8 @@ class OneBaseActionTestCase(BaseActionTestCase):
         self._config_good = self.load_yaml('config_good.yaml')
         self._config_blank = self.load_yaml('config_blank.yaml')
         self._config_partial = self.load_yaml('config_partial.yaml')
+        self._config_one_blank = self.load_yaml('config_one_blank.yaml')
+        self._config_no_one = self.load_yaml('config_no_one.yaml')
 
     def tearDown(self):
         super(OneBaseActionTestCase, self).tearDown()
@@ -50,3 +52,11 @@ class OneBaseActionTestCase(BaseActionTestCase):
     @property
     def config_partial(self):
         return self._config_partial
+
+    @property
+    def config_one_blank(self):
+        return self._config_one_blank
+
+    @property
+    def config_no_one(self):
+        return self._config_no_one

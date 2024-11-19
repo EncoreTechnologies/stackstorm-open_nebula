@@ -47,7 +47,7 @@ class BaseAction(Action):
             requests.packages.urllib3.disable_warnings()  # pylint: disable=no-member
 
             try:
-                _create_unverified_https_context = ssl._create_unverified_context
+                _create_unverified_https_context = ssl._create_unverified_context()
             except AttributeError:
                 pass
             else:
@@ -96,7 +96,7 @@ class BaseAction(Action):
     # Return all disks associated with the given template
     def template_disks_get(self, template):
         disks = template.TEMPLATE['DISK']
-        if type(disks) is OrderedDict:
+        if type(disks) is OrderedDict or type(disks) is dict:
             disks = [disks]
 
         result = [dict(disk) for disk in disks]
@@ -111,7 +111,7 @@ class BaseAction(Action):
         vm_ids.sort()
 
         return vm_ids
-    
+
     def wait_for_vm(self, one, vm_id, timeout=30):
         # Wait for VM to enter LCM State of 3 = 'running'
         lcm_state = one.vm.info(vm_id).LCM_STATE
