@@ -1,3 +1,6 @@
+## 1.0.2
+- Updates bus type on windows vms for vm disk add action
+
 ## 1.0.1
 - Added action to check an attribute for a list of vms
 
