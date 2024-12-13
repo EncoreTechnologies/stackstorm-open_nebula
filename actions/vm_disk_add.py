@@ -79,7 +79,7 @@ class VmDiskAdd(BaseAction):
 
         return self.one.vm.attach(vm_id, disk_vector)
 
-    def update_template(self, template, image_id):
+    def update_template(self, template, image_id, os_type):
         # Get list of disks on template
         disks = self.template_disks_get(template)
 
@@ -100,8 +100,12 @@ class VmDiskAdd(BaseAction):
 
             disk_attrs.append(disk_attr)
 
-        # Add new disk attributes
-        disk_attrs.append("DISK = [ IMAGE_ID = {} ]".format(image_id))
+        # Add new disk attributes based on OS type
+        if os_type == "linux":
+            disk_attrs.append("DISK = [ IMAGE_ID = {} ]".format(image_id))
+        elif os_type == "windows":
+            virtio_options = "DEV_PREFIX = vd , TARGET = vda , BUS = virtio"
+            disk_attrs.append("DISK = [ IMAGE_ID = {} , {} ]".format(image_id, virtio_options))
 
         # Build final attributes string, combining old and new
         attributes = "\n".join([attr for attr in disk_attrs])
@@ -110,7 +114,7 @@ class VmDiskAdd(BaseAction):
         return self.one.template.update(template.ID, attributes, 1)
 
     def run(self, datastore_name, disk_check_timeout, disk_description, disk_format,
-            disk_type, disk_name, disk_size_gb, vm_name, open_nebula=None):
+            disk_type, disk_name, disk_size_gb, os_type, vm_name, open_nebula=None):
         # Create pyone session
         self.one = self.pyone_session_create(open_nebula)
 
@@ -131,6 +135,6 @@ class VmDiskAdd(BaseAction):
         self.attach_disk(vm.ID, image_id, disk_format)
 
         # Update the template with the new disk
-        self.update_template(template, image_id)
+        self.update_template(template, image_id, os_type)
 
         return (True, "Disk ID: {}".format(image_id))

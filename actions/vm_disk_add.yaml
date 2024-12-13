@@ -37,7 +37,7 @@ parameters:
     disk_name:
         type: string
         description: Name for the new disk
-        required: false
+        required: true
     disk_size_gb:
         type: integer
         description: Size of new Drive in GB
@@ -49,6 +49,13 @@ parameters:
             Pre-Configured Open Nebula connection details
         required: false
         default: ~
+    os_type:
+        type: string
+        description: OS type of the VM the disk is being added to
+        required: true
+        enum:
+          - 'linux'
+          - 'windows'
     vm_name:
         type: string
         description: Name of the Virtual Machine as it appears in Open Nebula
