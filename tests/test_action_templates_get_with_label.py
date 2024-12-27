@@ -67,7 +67,7 @@ class TemplatesGetWithLabelTestCase(OneBaseActionTestCase):
             }
         }
         expected_result = [temp1, temp3]
-        
+
         mock_one = mock.Mock()
         # Convert the templates dict to xml for the xmltojson.parse function in the action
         mock_one.one.templatepool.info.return_value = [
@@ -106,7 +106,7 @@ class TemplatesGetWithLabelTestCase(OneBaseActionTestCase):
             }
         }
         expected_result = [temp1]
-        
+
         mock_one = mock.Mock()
         # Convert the templates dict to xml for the xmltojson.parse function in the action
         mock_one.one.templatepool.info.return_value = [
