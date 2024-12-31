@@ -46,16 +46,7 @@ class BaseActionTestCase(OneBaseActionTestCase):
         raise AttributeError()
         # raise Exception(AttributeError)
 
-    # @mock.patch("lib.action_base.ssl._create_unverified_context",
-    # side_effect=Exception(AttributeError))
     def test_init_ssl_error(self):
-        # mock_ssl._create_unverified_context = self.raise_error()
-        # mock_ssl.side_effect = AttributeError()
-        # mockedObj = mock_ssl.return_value
-        # mockedObj._create_unverified_context.side_effect = self.raise_error
-        # mockedObj._create_unverified_context.side_effect =
-        # mock.Mock(side_effect=AttributeError('Test'))
-
         with mock.patch('lib.action_base.ssl._create_unverified_context',
                         side_effect=AttributeError('mocked error')):
             action = self.get_action_instance(self._config_good)
@@ -67,6 +58,20 @@ class BaseActionTestCase(OneBaseActionTestCase):
         # define test variables
         test_one = 'default'
         # The following values are from the cfg_config_new
+        expected_result = {'passwd': 'passwd', 'host': 'test.com',
+                           'port': 2633, 'user': 'user'}
+
+        # invoke action with a valid config
+        result = action._get_connection_info(test_one)
+
+        self.assertEqual(result, expected_result)
+
+    def test_get_connection_info_none(self):
+        action = self.get_action_instance(self._config_good)
+
+        # define test variables
+        test_one = None
+        # If no open_nebula variable is given then it will use default
         expected_result = {'passwd': 'passwd', 'host': 'test.com',
                            'port': 2633, 'user': 'user'}
 
@@ -184,6 +189,54 @@ class BaseActionTestCase(OneBaseActionTestCase):
 
         self.assertEqual(result, expected_result)
         mock_one.vmpool.info.assert_called_with(-2, -1, -1, -1)
+
+    @mock.patch('lib.action_base.time.sleep', return_value=None)
+    @mock.patch('lib.action_base.time.time', side_effect=[0, 5, 10, 15, 20, 25, 30, 35])
+    def test_wait_for_vm_success(self, mock_time, mock_sleep):
+        # Arrange
+        action = self.get_action_instance(self._config_good)
+        one = mock.MagicMock()
+        vm_id = 1
+        timeout = 30
+
+        one.vm.info.side_effect = [
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=3)
+        ]
+
+        # Act
+        result = action.wait_for_vm(one, vm_id, timeout)
+
+        # Assert
+        self.assertEqual(result, 3)
+        self.assertEqual(one.vm.info.call_count, 3)
+
+    @mock.patch('lib.action_base.time.sleep', return_value=None)
+    @mock.patch('lib.action_base.time.time', side_effect=[0, 5, 10, 15, 20, 25, 30, 35])
+    def test_wait_for_vm_timeout(self, mock_time, mock_sleep):
+        # Arrange
+        action = self.get_action_instance(self._config_good)
+        one = mock.MagicMock()
+        vm_id = 1
+        timeout = 30
+
+        one.vm.info.side_effect = [
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0),
+            mock.MagicMock(LCM_STATE=0)
+        ]
+
+        # Act
+        result = action.wait_for_vm(one, vm_id, timeout)
+
+        # Assert
+        self.assertEqual(result, 0)
+        self.assertEqual(one.vm.info.call_count, 7)
 
     def test_run(self):
         action = self.get_action_instance(self._config_good)

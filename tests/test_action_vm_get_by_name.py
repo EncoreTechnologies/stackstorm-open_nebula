@@ -31,7 +31,7 @@ class VmGetByNameTestCase(OneBaseActionTestCase):
 
         # Define test parameters
         vm_name = 'test-vm.com'
-        filter = 'NAME=' + vm_name
+        filter = 'VM.NAME=' + vm_name
         open_nebula = 'default'
         expected_result = ['VM1', 'VM2']
 

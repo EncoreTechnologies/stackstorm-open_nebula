@@ -1,3 +1,6 @@
+## 1.1.0
+- Added unit tests for all python actions
+
 ## 1.0.2
 - Updates bus type on windows vms for vm disk add action
 
