@@ -13,35 +13,41 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from one_base_action_test_case import OneBaseActionTestCase
-from template_delete import TemplateDelete
+from vm_get_by_name import VmGetByName
 import unittest.mock as mock
 
 __all__ = [
-    'TemplateDeleteTestCase'
+    'VmGetByNameTestCase'
 ]
 
 
-class TemplateDeleteTestCase(OneBaseActionTestCase):
+class VmGetByNameTestCase(OneBaseActionTestCase):
     __test__ = True
-    action_cls = TemplateDelete
+    action_cls = VmGetByName
 
     @mock.patch("lib.action_base.BaseAction.pyone_session_create")
     def test_run(self, mock_session):
         action = self.get_action_instance(self._config_good)
 
         # Define test parameters
-        image_remove = True
-        template_id = 27
-        open_nebula = "default"
-        expected_result = "result"
+        vm_name = 'test-vm.com'
+        filter = 'VM.NAME=' + vm_name
+        open_nebula = 'default'
+        expected_result = ['VM1', 'VM2']
 
         # Mock one object and run action
+        mock_vm1 = mock.Mock()
+        mock_vm1.TEMPLATE = 'VM1'
+        mock_vm2 = mock.Mock()
+        mock_vm2.TEMPLATE = 'VM2'
+        mock_vmpool = mock.Mock()
+        mock_vmpool.VM = [mock_vm1, mock_vm2]
         mock_one = mock.Mock()
-        mock_one.template.delete.return_value = expected_result
+        mock_one.vmpool.infoextended.return_value = mock_vmpool
         mock_session.return_value = mock_one
-        result = action.run(image_remove, template_id, open_nebula)
+        result = action.run(vm_name, open_nebula)
 
         # Verify result and calls
         self.assertEqual(expected_result, result)
         mock_session.assert_called_with(open_nebula)
-        mock_one.template.delete.assert_called_with(template_id, image_remove)
+        mock_one.vmpool.infoextended.assert_called_with(-2, -1, -1, -1, filter)

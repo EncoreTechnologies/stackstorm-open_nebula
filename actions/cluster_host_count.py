@@ -13,11 +13,10 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-
 from lib.action_base import BaseAction
 
+
 class OpenNebulaHostCount(BaseAction):
-    
     def run(self, open_nebula=None):
 
         one = self.pyone_session_create(open_nebula)

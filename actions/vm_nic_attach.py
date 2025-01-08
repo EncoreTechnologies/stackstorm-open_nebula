@@ -34,6 +34,7 @@ class VmNicAttach(BaseAction):
 
         # Check if nic was attached
         if lcm_state != 3:
-            return (False, "Timed out waiting for VM {} to enter running state after attaching NIC".format(vm_id))
+            return (False, "Timed out waiting for VM {} to enter running state "
+                    "after attaching NIC".format(vm_id))
         else:
             return (True, "Succesfully attached NIC to VM {}".format(vm_id))

@@ -47,7 +47,7 @@ class BaseAction(Action):
             requests.packages.urllib3.disable_warnings()  # pylint: disable=no-member
 
             try:
-                _create_unverified_https_context = ssl._create_unverified_context
+                _create_unverified_https_context = ssl._create_unverified_context()
             except AttributeError:
                 pass
             else:

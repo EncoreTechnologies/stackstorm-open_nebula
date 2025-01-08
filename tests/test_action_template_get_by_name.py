@@ -51,7 +51,7 @@ class TemplateGetByNameTestCase(OneBaseActionTestCase):
 
         # Mock one object and run action
         mock_info = mock.Mock()
-        mock_info.VMTEMPLATE= test_temps
+        mock_info.VMTEMPLATE = test_temps
         mock_one = mock.Mock()
         mock_one.templatepool.info.return_value = mock_info
         mock_session.return_value = mock_one
@@ -82,10 +82,9 @@ class TemplateGetByNameTestCase(OneBaseActionTestCase):
 
         # Mock one object and run action
         mock_info = mock.Mock()
-        mock_info.VMTEMPLATE= test_temps
+        mock_info.VMTEMPLATE = test_temps
         mock_one = mock.Mock()
         mock_one.templatepool.info.return_value = mock_info
         mock_session.return_value = mock_one
         with self.assertRaises(Exception):
             action.run(template_name, open_nebula)
-

@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from one_base_action_test_case import OneBaseActionTestCase
-
 from cluster_vm_count import OpenNebulaVMCount
 import unittest.mock as mock
 
@@ -45,7 +44,6 @@ class OpenNebulaVMCountTestCase(OneBaseActionTestCase):
         mock_host4.VMS.ID = [10, 11, 12]
         mock_cluster1.HOSTS.ID = [mock_host1, mock_host2]
         mock_cluster2.HOSTS.ID = [mock_host3, mock_host4]
-
 
         test_clusters = [mock_cluster1, mock_cluster2]
         open_nebula = "default"
@@ -106,7 +104,7 @@ class OpenNebulaVMCountTestCase(OneBaseActionTestCase):
         mock_one.host.info.assert_has_calls = [
             mock.call(mock_host1),
             mock.call(mock_host2)]
-        
+
     @mock.patch("lib.action_base.BaseAction.pyone_session_create")
     def test_run_no_clusters(self, mock_session):
         action = self.get_action_instance(self._config_good)

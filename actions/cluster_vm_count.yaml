@@ -1,7 +1,7 @@
 ---
 name: cluster_vm_count
 runner_type: python-script
-description: Retrieves the hosts on an Open Nebula system.
+description: Return an object containing each cluster with the number of VMs on each one.
 enabled: true
 entry_point: cluster_vm_count.py
 parameters:

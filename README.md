@@ -64,7 +64,10 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 ## Actions
 |  Action  |  Description  |
 |---|---|
+|  cluster_host_count  |  Retrieves all of the hosts from each cluster on an Open Nebula system  |
+|  cluster_vm_count  |  Return an object containing each cluster with the number of VMs on each one  |
 |  clusters_get  |  Retrieves information for all the clusters in the pool or the given clusters if any IDs are passed  |
+|  data_get_all  |  Gathers all data for all VMs in Open Nebula  |
 |  datastores_get  |  Retrieves information for all or part of the datastores in the pool or the given datastores if any IDs are passed  |
 |  hosts_get  |  Retrieves information for all the hosts in the pool or the given hosts if any IDs are passed  |
 |  images_get  |  Retrieves information for all or part of the images in the pool or the given image if any IDs are passed  |
@@ -89,6 +92,8 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  vm_labels_add  |  Append one or more labels to the given VM  |
 |  vm_labels_get  |  Retrieves a list of labels on the given VM  |
 |  vm_lock  |  Locks a VM from having actions performed on it  |
+|  vm_nic_attach  |  Attaches a nic to the given VM  |
+|  vm_nic_detach  |  Detaches a nic from the given VM  |
 |  vm_poweroff  |  Gracefully powers off a running VM by sending the ACPI signal. It is similar to suspend but without saving the VM state  |
 |  vm_reboot  |  Gracefully reboots a running VM, sending the ACPI signal  |
 |  vm_release  |  Releases a VM from hold state, setting it to pending  |

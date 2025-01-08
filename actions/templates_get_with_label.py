@@ -24,9 +24,7 @@ class TemplatesGetWithLabel(BaseAction):
         :returns: Template information with name and ID appended
         """
         one_session = self.xmlrpc_session_create(open_nebula)
-
-        method = getattr(one_session, 'one.templatepool.info')
-        response = method(self.auth_string, *tuple([-2, -1, -1, -1]))
+        response = one_session.one.templatepool.info(self.auth_string, *tuple([-2, -1, -1, -1]))
 
         # Check the result for an error (first element will be FALSE on error)
         if response[0]:

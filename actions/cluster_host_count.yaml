@@ -1,7 +1,7 @@
 ---
 name: cluster_host_count
 runner_type: python-script
-description: Retrieves the hosts on an Open Nebula system.
+description: Retrieves all of the hosts from each cluster on an Open Nebula system.
 enabled: true
 entry_point: cluster_host_count.py
 parameters:

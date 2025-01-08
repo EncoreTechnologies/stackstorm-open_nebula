@@ -28,6 +28,7 @@ class VmNicDetach(BaseAction):
 
         # Check if nic was detached
         if lcm_state != 3:
-            return (False, "Timed out waiting for VM {} to enter running state after detaching NIC".format(vm_id))
+            return (False, "Timed out waiting for VM {} to enter running "
+                    "state after detaching NIC".format(vm_id))
         else:
             return (True, "Succesfully detached NIC from VM {}".format(vm_id))
