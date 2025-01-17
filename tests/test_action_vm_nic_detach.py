@@ -45,7 +45,8 @@ class VmNicDetachTestCase(OneBaseActionTestCase):
         self.assertEqual(result, (True, "Succesfully detached NIC from VM {}".format(vm_id)))
         mock_pyone_session_create.assert_called_once_with(open_nebula)
         mock_pyone_session_create.return_value.vm.detachnic.assert_called_once_with(vm_id, nic_id)
-        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id, detach_timeout)
+        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id,
+                                                 detach_timeout)
 
     @patch('vm_nic_detach.VmNicDetach.pyone_session_create')
     @patch('vm_nic_detach.VmNicDetach.wait_for_vm')
@@ -63,10 +64,13 @@ class VmNicDetachTestCase(OneBaseActionTestCase):
         result = self.action.run(detach_timeout, nic_id, vm_id, open_nebula)
 
         # Assert
-        self.assertEqual(result, (False, "Timed out waiting for VM {} to enter running state after detaching NIC".format(vm_id)))
+        self.assertEqual(result, (False, "Timed out waiting for VM {} to enter running state "
+                                  "after detaching NIC".format(vm_id)))
         mock_pyone_session_create.assert_called_once_with(open_nebula)
         mock_pyone_session_create.return_value.vm.detachnic.assert_called_once_with(vm_id, nic_id)
-        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id, detach_timeout)
+        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id,
+                                                 detach_timeout)
+
 
 if __name__ == '__main__':
     unittest.main()

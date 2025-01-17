@@ -13,7 +13,6 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 from one_base_action_test_case import OneBaseActionTestCase
-import unittest.mock as mock
 import unittest
 from unittest.mock import MagicMock, patch
 from vm_bestfit import BestFit
@@ -49,7 +48,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         mock_pyone_session_create.return_value = clusterpool_mock
 
         # Act
-        result = self.action.run(cluster_name, datastore_filter_strategy, datastore_filter_regex_list, disks, open_nebula)
+        result = self.action.run(cluster_name, datastore_filter_strategy,
+                                 datastore_filter_regex_list, disks, open_nebula)
 
         # Assert
         self.assertEqual(result, {
@@ -78,8 +78,9 @@ class BestFitTestCase(OneBaseActionTestCase):
 
         # Act & Assert
         with self.assertRaises(Exception) as context:
-            self.action.run(cluster_name, datastore_filter_strategy, datastore_filter_regex_list, disks, open_nebula)
-        
+            self.action.run(cluster_name, datastore_filter_strategy,
+                            datastore_filter_regex_list, disks, open_nebula)
+
         self.assertTrue('No cluster found with the given name' in str(context.exception))
 
     def test_get_host(self):
@@ -115,7 +116,7 @@ class BestFitTestCase(OneBaseActionTestCase):
         # Act & Assert
         with self.assertRaises(Exception) as context:
             self.action.get_host(cluster)
-        
+
         self.assertTrue('No available hosts found for cluster' in str(context.exception))
 
     def test_get_storage_from_disks(self):
@@ -170,7 +171,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         self.action.one.datastore.info.side_effect = [datastore1, datastore2, datastore3]
 
         # Mock filter_datastores to filter out datastore2
-        self.action.filter_datastores = MagicMock(side_effect=lambda name, strategy, regex: name != 'datastore2')
+        self.action.filter_datastores = MagicMock(side_effect=lambda name, strategy,
+                                                  regex: name != 'datastore2')
 
         # Act
         result = self.action.get_storage(cluster, 'strategy', ['regex'], disks)
@@ -204,7 +206,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         datastore_filter_regex_list = None
 
         # Act
-        result = self.action.filter_datastores(ds_name, datastore_filter_strategy, datastore_filter_regex_list)
+        result = self.action.filter_datastores(ds_name, datastore_filter_strategy,
+                                               datastore_filter_regex_list)
 
         # Assert
         self.assertTrue(result)
@@ -216,7 +219,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         datastore_filter_regex_list = ['datastore1', 'datastore2']
 
         # Act
-        result = self.action.filter_datastores(ds_name, datastore_filter_strategy, datastore_filter_regex_list)
+        result = self.action.filter_datastores(ds_name, datastore_filter_strategy,
+                                               datastore_filter_regex_list)
 
         # Assert
         self.assertFalse(result)
@@ -228,7 +232,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         datastore_filter_regex_list = ['datastore1', 'datastore2']
 
         # Act
-        result = self.action.filter_datastores(ds_name, datastore_filter_strategy, datastore_filter_regex_list)
+        result = self.action.filter_datastores(ds_name, datastore_filter_strategy,
+                                               datastore_filter_regex_list)
 
         # Assert
         self.assertTrue(result)
@@ -240,7 +245,8 @@ class BestFitTestCase(OneBaseActionTestCase):
         datastore_filter_regex_list = ['datastore1', 'datastore2']
 
         # Act
-        result = self.action.filter_datastores(ds_name, datastore_filter_strategy, datastore_filter_regex_list)
+        result = self.action.filter_datastores(ds_name, datastore_filter_strategy,
+                                               datastore_filter_regex_list)
 
         # Assert
         self.assertTrue(result)
@@ -252,10 +258,12 @@ class BestFitTestCase(OneBaseActionTestCase):
         datastore_filter_regex_list = ['datastore1', 'datastore2']
 
         # Act
-        result = self.action.filter_datastores(ds_name, datastore_filter_strategy, datastore_filter_regex_list)
+        result = self.action.filter_datastores(ds_name, datastore_filter_strategy,
+                                               datastore_filter_regex_list)
 
         # Assert
         self.assertFalse(result)
+
 
 if __name__ == '__main__':
     unittest.main()

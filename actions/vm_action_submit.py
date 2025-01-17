@@ -17,10 +17,10 @@ from lib.action_base import BaseAction
 
 
 class VmActionSubmit(BaseAction):
-    def run(self, vm_action, vm_id, open_nebula=None):
+    def run(self, **kwargs):
         """ Submits a given action to be performed on a given virtual machine
         :returns: Result from action API call
         """
-        one = self.pyone_session_create(open_nebula)
+        one = self.pyone_session_create(kwargs['open_nebula'])
 
-        return one.vm.action(vm_action, vm_id)
+        return one.vm.action(kwargs['vm_action'], kwargs['vm_id'])

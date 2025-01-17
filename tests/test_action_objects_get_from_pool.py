@@ -15,10 +15,8 @@
 from one_base_action_test_case import OneBaseActionTestCase
 import unittest.mock as mock
 import pytest
-from unittest import mock
 from objects_get_from_pool import ObjectsGetFromPool
 import json
-import xmltojson
 
 __all__ = [
     'ObjectsGetFromPoolTestCase'
@@ -48,7 +46,8 @@ class ObjectsGetFromPoolTestCase(OneBaseActionTestCase):
 
         assert result == objects
         self.action.xmlrpc_session_create.assert_called_once_with(open_nebula)
-        self.action.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                          *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
 
     @mock.patch('objects_get_from_pool.xmltojson.parse')
@@ -70,7 +69,8 @@ class ObjectsGetFromPoolTestCase(OneBaseActionTestCase):
 
         assert result == [objects]
         self.action.xmlrpc_session_create.assert_called_once_with(open_nebula)
-        self.action.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                          *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
 
     @mock.patch('objects_get_from_pool.xmltojson.parse')
@@ -92,7 +92,8 @@ class ObjectsGetFromPoolTestCase(OneBaseActionTestCase):
 
         assert result == [{"ID": "1"}, {"ID": "2"}]
         self.action.xmlrpc_session_create.assert_called_once_with(open_nebula)
-        self.action.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                          *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
 
     @mock.patch('objects_get_from_pool.xmltojson.parse')
@@ -115,7 +116,8 @@ class ObjectsGetFromPoolTestCase(OneBaseActionTestCase):
 
         assert str(excinfo.value) == 'No objects found with the given ID: 4'
         self.action.xmlrpc_session_create.assert_called_once_with(open_nebula)
-        self.action.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                          *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
 
     def test_run_error_response(self):
@@ -134,4 +136,5 @@ class ObjectsGetFromPoolTestCase(OneBaseActionTestCase):
 
         assert str(excinfo.value) == "Error message"
         self.action.xmlrpc_session_create.assert_called_once_with(open_nebula)
-        self.action.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                          *tuple(object_options))

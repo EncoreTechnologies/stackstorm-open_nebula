@@ -66,12 +66,14 @@ class VmSnapshotsDeleteAgeTestCase(OneBaseActionTestCase):
         # Assert
         self.assertEqual(result, {'deleted_snaps': {'vm1': ['snap1']}})
         mock_pyone_session_create.assert_called_once_with(open_nebula)
-        mock_remove_snapshots.assert_called_once_with(mock_pyone_session_create.return_value, vm_id, snapshot_age_days)
+        mock_remove_snapshots.assert_called_once_with(mock_pyone_session_create.return_value, vm_id,
+                                                      snapshot_age_days)
 
     @patch('vm_snapshots_delete_age.VmSnapshotsDeleteAge.pyone_session_create')
     @patch('vm_snapshots_delete_age.VmSnapshotsDeleteAge.get_all_vm_ids')
     @patch('vm_snapshots_delete_age.VmSnapshotsDeleteAge.remove_snapshots')
-    def test_run_without_vm_id(self, mock_remove_snapshots, mock_get_all_vm_ids, mock_pyone_session_create):
+    def test_run_without_vm_id(self, mock_remove_snapshots, mock_get_all_vm_ids,
+                               mock_pyone_session_create):
         # Arrange
         snapshot_age_days = 5
         vm_id = None
@@ -99,8 +101,10 @@ class VmSnapshotsDeleteAgeTestCase(OneBaseActionTestCase):
         vm.NAME = 'vm1'
         vm.TEMPLATE = {
             'SNAPSHOT': [
-                {'TIME': (datetime.now(timezone.utc) - timedelta(days=10)).timestamp(), 'ID': 1, 'NAME': 'snap1'},
-                {'TIME': (datetime.now(timezone.utc) - timedelta(days=3)).timestamp(), 'ID': 2, 'NAME': 'snap2'}
+                {'TIME': (datetime.now(timezone.utc) - timedelta(days=10)).timestamp(),
+                 'ID': 1, 'NAME': 'snap1'},
+                {'TIME': (datetime.now(timezone.utc) - timedelta(days=3)).timestamp(),
+                 'ID': 2, 'NAME': 'snap2'}
             ]
         }
         self.action.one = MagicMock()
@@ -112,6 +116,7 @@ class VmSnapshotsDeleteAgeTestCase(OneBaseActionTestCase):
         # Assert
         self.assertEqual(result, {'vm1': ['snap1']})
         self.action.one.vm.snapshotdelete.assert_called_once_with(vm_id, 1)
+
 
 if __name__ == '__main__':
     unittest.main()

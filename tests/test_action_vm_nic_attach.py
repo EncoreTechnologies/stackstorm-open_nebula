@@ -42,15 +42,18 @@ class VmNicAttachTestCase(OneBaseActionTestCase):
         mock_wait_for_vm.return_value = 3
 
         # Act
-        result = self.action.run(attach_timeout, gateway, ip_addr, method, network_id, vm_id, open_nebula)
+        result = self.action.run(attach_timeout, gateway, ip_addr, method,
+                                 network_id, vm_id, open_nebula)
 
         # Assert
         self.assertEqual(result, (True, "Succesfully attached NIC to VM {}".format(vm_id)))
         mock_pyone_session_create.assert_called_once_with(open_nebula)
         mock_pyone_session_create.return_value.vm.attachnic.assert_called_once_with(
-            vm_id, "NIC=[IP={}, NETWORK_ID={}, GATEWAY={}, METHOD={}]".format(ip_addr, network_id, gateway, method)
+            vm_id, "NIC=[IP={}, NETWORK_ID={}, GATEWAY={}, METHOD={}]".format(ip_addr, network_id,
+                                                                              gateway, method)
         )
-        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id, attach_timeout)
+        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value,
+                                                 vm_id, attach_timeout)
 
     @patch('vm_nic_attach.VmNicAttach.pyone_session_create')
     @patch('vm_nic_attach.VmNicAttach.wait_for_vm')
@@ -68,15 +71,20 @@ class VmNicAttachTestCase(OneBaseActionTestCase):
         mock_wait_for_vm.return_value = 1
 
         # Act
-        result = self.action.run(attach_timeout, gateway, ip_addr, method, network_id, vm_id, open_nebula)
+        result = self.action.run(attach_timeout, gateway, ip_addr, method,
+                                 network_id, vm_id, open_nebula)
 
         # Assert
-        self.assertEqual(result, (False, "Timed out waiting for VM {} to enter running state after attaching NIC".format(vm_id)))
+        self.assertEqual(result, (False, "Timed out waiting for VM {} to enter running state "
+                                  "after attaching NIC".format(vm_id)))
         mock_pyone_session_create.assert_called_once_with(open_nebula)
         mock_pyone_session_create.return_value.vm.attachnic.assert_called_once_with(
-            vm_id, "NIC=[IP={}, NETWORK_ID={}, GATEWAY={}, METHOD={}]".format(ip_addr, network_id, gateway, method)
+            vm_id, "NIC=[IP={}, NETWORK_ID={}, GATEWAY={}, METHOD={}]".format(ip_addr, network_id,
+                                                                              gateway, method)
         )
-        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id, attach_timeout)
+        mock_wait_for_vm.assert_called_once_with(mock_pyone_session_create.return_value, vm_id,
+                                                 attach_timeout)
+
 
 if __name__ == '__main__':
     unittest.main()

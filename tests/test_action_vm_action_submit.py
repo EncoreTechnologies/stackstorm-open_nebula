@@ -39,7 +39,12 @@ class VmActionSubmitTestCase(OneBaseActionTestCase):
         mock_one = mock.Mock()
         mock_one.vm.action.return_value = expected_result
         mock_session.return_value = mock_one
-        result = action.run(vm_action, vm_id, open_nebula)
+        kwargs = {
+            'vm_action': vm_action,
+            'vm_id': vm_id,
+            'open_nebula': open_nebula
+        }
+        result = action.run(**kwargs)
 
         # Verify result and calls
         self.assertEqual(expected_result, result)
