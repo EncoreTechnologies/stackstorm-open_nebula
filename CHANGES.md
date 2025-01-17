@@ -1,3 +1,7 @@
+## 1.1.1
+- Updated files to fix flake8 errors
+- Fixed params for vm terminate action
+
 ## 1.1.0
 - Added unit tests for all python actions
 

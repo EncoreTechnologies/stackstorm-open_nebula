@@ -15,7 +15,6 @@
 from one_base_action_test_case import OneBaseActionTestCase
 from data_get_all import DataGetAll
 import unittest.mock as mock
-import xmltodict
 import json
 
 
@@ -76,7 +75,7 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         result = self.action.update_objects(objects, 'VM')
         assert result[0]['template']['disk_space'] == '3.0'
         assert result[0]['snapshot_count'] == 0
-    
+
     def test_update_objects_not_found(self):
         objects = [{'template': {'disk': [{'size': '2048'}, {'size': '1024'}]}}]
         result = self.action.update_objects(objects, 'NOT_FOUNT')
@@ -125,7 +124,8 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         result = self.action.get_objects(endpoint, object_options, object_type)
 
         assert result == objects
-        self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                                  *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
         self.action.lowercase_keys.assert_called_once_with(objects)
         self.action.filter_objects.assert_called_once_with(objects, object_type)
@@ -149,7 +149,8 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         result = self.action.get_objects(endpoint, object_options, object_type)
 
         assert result == [objects]
-        self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+        self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                                  *tuple(object_options))
         mock_parse.assert_called_once_with(response[1])
         self.action.lowercase_keys.assert_called_once_with([objects])
         self.action.filter_objects.assert_called_once_with([objects], object_type)
@@ -166,7 +167,8 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         with self.assertRaises(Exception):
             excinfo = self.action.get_objects(endpoint, object_options, object_type)
             assert str(excinfo.value) == "Error message"
-            self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string, *tuple(object_options))
+            self.action.session.some_endpoint.assert_called_once_with(self.action.auth_string,
+                                                                      *tuple(object_options))
 
     def test_lowercase_keys(self):
         obj = [{'KEY': 'value', 'NESTED': {'NESTED_KEY': 'nested_value'}}]

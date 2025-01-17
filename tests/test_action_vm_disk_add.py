@@ -48,7 +48,7 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
         # Act & Assert
         with self.assertRaises(Exception) as context:
             self.action.get_template(template_id)
-        
+
         self.assertTrue('Could not find template with id' in str(context.exception))
 
     def test_get_vm(self):
@@ -62,7 +62,8 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
 
         # Assert
         self.assertIsNotNone(result)
-        self.action.one.vmpool.infoextended.assert_called_once_with(-2, -1, -1, -1, "VM.NAME={}".format(vm_name))
+        self.action.one.vmpool.infoextended.assert_called_once_with(-2, -1, -1, -1,
+                                                                    "VM.NAME={}".format(vm_name))
 
     def test_get_vm_not_found(self):
         # Arrange
@@ -73,14 +74,15 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
         # Act & Assert
         with self.assertRaises(Exception) as context:
             self.action.get_vm(vm_name)
-        
+
         self.assertTrue('Could not find VM with name' in str(context.exception))
 
     def test_get_datastore_id(self):
         # Arrange
         datastore_name = 'test_datastore'
         self.action.one = MagicMock()
-        self.action.one.datastorepool.info.return_value = MagicMock(DATASTORE=[MagicMock(NAME='test_datastore', ID=1)])
+        self.action.one.datastorepool.info.return_value = MagicMock(DATASTORE=[MagicMock(
+            NAME='test_datastore', ID=1)])
 
         # Act
         result = self.action.get_datastore_id(datastore_name)
@@ -105,7 +107,8 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
         # Arrange
         datastore_name = 'does_not_exist'
         self.action.one = MagicMock()
-        self.action.one.datastorepool.info.return_value = MagicMock(DATASTORE=[MagicMock(NAME='test_datastore', ID=1)])
+        self.action.one.datastorepool.info.return_value = MagicMock(
+            DATASTORE=[MagicMock(NAME='test_datastore', ID=1)])
 
         # Act & Assert
         with self.assertRaises(Exception) as context:
@@ -158,8 +161,9 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
         with self.assertRaises(Exception) as context:
             self.action.allocate_image(disk_name, disk_description, disk_type, disk_size_gb,
                                        disk_format, datastore_id, disk_check_timeout)
-        
-        self.assertTrue('Timed out waiting for disk to enter a ready state' in str(context.exception))
+
+        self.assertTrue('Timed out waiting for disk to enter a ready state' in
+                        str(context.exception))
 
     def test_attach_disk(self):
         # Arrange
@@ -232,7 +236,8 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
     @patch('vm_disk_add.VmDiskAdd.allocate_image')
     @patch('vm_disk_add.VmDiskAdd.attach_disk')
     @patch('vm_disk_add.VmDiskAdd.update_template')
-    def test_run(self, mock_update_template, mock_attach_disk, mock_allocate_image, mock_get_datastore_id, mock_get_template, mock_get_vm, mock_pyone_session_create):
+    def test_run(self, mock_update_template, mock_attach_disk, mock_allocate_image,
+                 mock_get_datastore_id, mock_get_template, mock_get_vm, mock_pyone_session_create):
         # Arrange
         datastore_name = 'test_datastore'
         disk_check_timeout = 10
@@ -263,10 +268,12 @@ class VmDiskAddTestCase(OneBaseActionTestCase):
         mock_get_vm.assert_called_once_with(vm_name)
         mock_get_template.assert_called_once_with(1)
         mock_get_datastore_id.assert_called_once_with(datastore_name)
-        mock_allocate_image.assert_called_once_with(disk_name, disk_description, disk_type, disk_size_gb,
-                                                    disk_format, 1, disk_check_timeout)
+        mock_allocate_image.assert_called_once_with(disk_name, disk_description, disk_type,
+                                                    disk_size_gb, disk_format, 1,
+                                                    disk_check_timeout)
         mock_attach_disk.assert_called_once_with(1, 1, disk_format)
         mock_update_template.assert_called_once_with(mock_get_template.return_value, 1, os_type)
+
 
 if __name__ == '__main__':
     unittest.main()
