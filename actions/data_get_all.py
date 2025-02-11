@@ -64,6 +64,19 @@ class DataGetAll(BaseAction):
     def update_network(self, obj):
         return obj
 
+    def zones_to_csv(self, obj, obj_type):
+        # Get template based on obj type if it exists
+        if obj_type == 'VM':
+            template = obj.get('user_template', None)
+        else:
+            template = obj.get('template', None)
+
+        # If template exists and has zone attr, update it
+        if template and template.get('zone') is not None:
+            obj['template']['zone'] = template['zone'].replace(" ", ",")
+
+        return obj
+
     def update_objects(self, objects, object_type):
         # define update functions
         update_functions = {
@@ -74,12 +87,15 @@ class DataGetAll(BaseAction):
         }
 
         # Get the update function based on object type
-        for obj in objects:
+        for i, obj in enumerate(objects):
+            # Convert zone names to CSV format
+            objects[i] = self.zones_to_csv(obj, object_type)
+
             if object_type not in update_functions.keys():
                 continue
 
             update_function = update_functions.get(object_type)
-            obj = update_function(obj)
+            objects[i] = update_function(objects[i])
 
         return objects
 
@@ -157,5 +173,9 @@ class DataGetAll(BaseAction):
         for config in api_config:
             objects = self.get_objects(config['endpoint'], config['options'], config['type'])
             all_objs[config['name']] = objects
+
+        # Add hostname to data
+        conn = self._get_connection_info(open_nebula)
+        all_objs['hostname'] = conn['host']
 
         return all_objs

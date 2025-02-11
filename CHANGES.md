@@ -1,3 +1,6 @@
+## 1.1.2
+- Updates data get actions and tests to parse zone names to csv
+
 ## 1.1.1
 - Updated files to fix flake8 errors
 - Fixed params for vm terminate action
