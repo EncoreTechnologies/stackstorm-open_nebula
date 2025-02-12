@@ -71,8 +71,14 @@ class BestFit(BaseAction):
             most_space = 0
             for ds_id in cluster.DATASTORES.ID:
                 ds = self.one.datastore.info(ds_id)
+
                 # only allow placing onto a datastore in "ON" mode (STATE 0)
                 if ds.STATE != 0:
+                    continue
+
+                # Need to find an IMAGE datastore to put it on
+                # TYPES: 0=IMAGE, 1=SYSTEM, 3=FILE
+                if ds.TYPE != 0:
                     continue
 
                 # The following function returns False if the name of the datastore
