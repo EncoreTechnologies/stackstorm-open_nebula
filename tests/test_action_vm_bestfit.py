@@ -38,7 +38,7 @@ class BestFitTestCase(OneBaseActionTestCase):
         open_nebula = 'open_nebula'
 
         mock_get_host.return_value = MagicMock(NAME='host1', ID=1)
-        mock_get_storage.return_value = MagicMock(NAME='datastore1', ID=1)
+        mock_get_storage.return_value = MagicMock(NAME='datastore1', ID=1, TYPE=0)
 
         # Mock the clusterpool and cluster objects
         cluster_mock = MagicMock()
@@ -125,9 +125,9 @@ class BestFitTestCase(OneBaseActionTestCase):
         cluster.DATASTORES.ID = [1, 2, 3]
         disks = [{'datastore': 'datastore2'}]
 
-        datastore1 = MagicMock(NAME='datastore1', STATE=0)
-        datastore2 = MagicMock(NAME='datastore2', STATE=0)
-        datastore3 = MagicMock(NAME='datastore3', STATE=0)
+        datastore1 = MagicMock(NAME='datastore1', STATE=0, TYPE=0)
+        datastore2 = MagicMock(NAME='datastore2', STATE=0, TYPE=0)
+        datastore3 = MagicMock(NAME='datastore3', STATE=0, TYPE=0)
 
         self.action.one = MagicMock()
         self.action.one.datastore.info.side_effect = [datastore1, datastore2, datastore3]
@@ -144,9 +144,9 @@ class BestFitTestCase(OneBaseActionTestCase):
         cluster.DATASTORES.ID = [1, 2, 3]
         disks = [{'datastore': 'automatic'}]
 
-        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=0)
-        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=0)
-        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=0)
+        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=0, TYPE=0)
+        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=0, TYPE=0)
+        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=0, TYPE=0)
 
         self.action.one = MagicMock()
         self.action.one.datastore.info.side_effect = [datastore1, datastore2, datastore3]
@@ -163,9 +163,9 @@ class BestFitTestCase(OneBaseActionTestCase):
         cluster.DATASTORES.ID = [1, 2, 3]
         disks = [{'datastore': 'automatic'}]
 
-        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=0)
-        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=0)
-        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=0)
+        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=0, TYPE=0)
+        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=0, TYPE=0)
+        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=0, TYPE=0)
 
         self.action.one = MagicMock()
         self.action.one.datastore.info.side_effect = [datastore1, datastore2, datastore3]
@@ -186,9 +186,9 @@ class BestFitTestCase(OneBaseActionTestCase):
         cluster.DATASTORES.ID = [1, 2, 3]
         disks = [{'datastore': 'automatic'}]
 
-        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=1)
-        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=1)
-        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=1)
+        datastore1 = MagicMock(NAME='datastore1', FREE_MB=1000, STATE=1, TYPE=0)
+        datastore2 = MagicMock(NAME='datastore2', FREE_MB=2000, STATE=1, TYPE=0)
+        datastore3 = MagicMock(NAME='datastore3', FREE_MB=500, STATE=0, TYPE=1)
 
         self.action.one = MagicMock()
         self.action.one.datastore.info.side_effect = [datastore1, datastore2, datastore3]

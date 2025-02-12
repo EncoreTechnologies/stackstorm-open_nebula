@@ -1,3 +1,6 @@
+## 1.1.4
+- Updated bestfit action to only return image datastores
+
 ## 1.1.3
 - Added actions for looking up attributes on datastores
 
