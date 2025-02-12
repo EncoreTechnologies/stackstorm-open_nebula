@@ -3,10 +3,11 @@ ref: open_nebula
 name: open_nebula
 description: Open Nebula
 stackstorm_version: ">=2.9.0"
-version: 1.1.1
+version: 1.1.2
 author: John Schoewe
 email: john.schoewe@encore.tech
 contributors:
   - John Schoewe <john.schoewe@encore.tech>
+  - Jacob Huff <jacob.huff@encore.tech>
 python_versions:
   - "3"

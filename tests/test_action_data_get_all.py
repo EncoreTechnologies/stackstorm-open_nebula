@@ -70,11 +70,31 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         result = self.action.update_network(obj)
         assert result == obj
 
+    def test_zones_to_csv(self):
+        obj = {'template': {'zone': 'test1 test2'}}
+        result = self.action.zones_to_csv(obj, 'VNET')
+        assert result == {'template': {'zone': 'test1,test2'}}
+
+    def test_zones_to_csv_no_zone(self):
+        obj = {'template': {'no_zone': 'no_zone'}}
+        result = self.action.zones_to_csv(obj, 'VNET')
+        assert result == obj
+
+    def test_zones_to_csv_no_template(self):
+        obj = {'no_template': 'no_template'}
+        result = self.action.zones_to_csv(obj, 'VM')
+        assert result == obj
+
     def test_update_objects(self):
         objects = [{'template': {'disk': [{'size': '2048'}, {'size': '1024'}]}}]
         result = self.action.update_objects(objects, 'VM')
         assert result[0]['template']['disk_space'] == '3.0'
         assert result[0]['snapshot_count'] == 0
+
+    def test_update_objects_zones(self):
+        objects = [{'template': {'zone': 'test1 test2'}}]
+        result = self.action.update_objects(objects, 'VNET')
+        assert result[0]['template']['zone'] == 'test1,test2'
 
     def test_update_objects_not_found(self):
         objects = [{'template': {'disk': [{'size': '2048'}, {'size': '1024'}]}}]
@@ -201,7 +221,8 @@ class DataGetAllTestCase(OneBaseActionTestCase):
 
         expected_result = {
             'vms': 'obj1',
-            'networks': 'obj2'
+            'networks': 'obj2',
+            'hostname': 'test.com'
         }
 
         result = action.run(api_config, template_label_filters, open_nebula)
