@@ -1,3 +1,6 @@
+## 1.1.3
+- Added actions for looking up attributes on datastores
+
 ## 1.1.2
 - Updates data get actions and tests to parse zone names to csv
 

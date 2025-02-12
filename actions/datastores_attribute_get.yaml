@@ -1,0 +1,24 @@
+---
+name: datastores_attribute_get
+runner_type: python-script
+description: Return the value of the given attribute from the datastores
+enabled: true
+entry_point: datastores_attribute_get.py
+parameters:
+    attribute_name:
+        type: array
+        description: >
+            Name/path of the attribute on the datastore. This action returns only 1 value, multiple items
+            in this list will be interpreted as nested keys in the attributes object.
+            e.g. ['TEMPLATE','DISK'] will return the VM's disk info found at vm['TEMPLATE']['DISK']
+        required: true
+    ds_ids:
+        type: array
+        description: Array of IDs of the datastores to get the given attribute for
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~
