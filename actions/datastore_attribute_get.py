@@ -37,6 +37,7 @@ class DatastoreAttributeGet(BaseAction):
                 elif isinstance(return_value, Mapping) and attr in return_value:
                     return_value = return_value[attr]
                 else:
-                    raise ValueError("Given attribute: {} not found on datastore: {}".format(attr, ds_id))
+                    raise ValueError("Given attribute: {} not found on datastore: {}".format(
+                        attr, ds_id))
 
         return return_value
