@@ -195,33 +195,43 @@ class DataGetAllTestCase(OneBaseActionTestCase):
         result = self.action.lowercase_keys(obj)
         assert result == [{'key': 'value', 'nested': {'nested_key': 'nested_value'}}]
 
+    @mock.patch("data_get_all.DataGetAll.add_wilds")
     @mock.patch("data_get_all.DataGetAll.get_objects")
     @mock.patch("lib.action_base.BaseAction.xmlrpc_session_create")
-    def test_run(self, mock_session, mock_get_objects):
+    def test_run(self, mock_session, mock_get_objects, mock_add_wilds):
         action = self.get_action_instance(self._config_good)
         api_config = [
             {
                 'name': 'vms',
-                'endpoint': 'one.vmpool.infoextended',
+                'endpoint': 'one.test.endpoint',
                 'options': [-2, -1, -1, -1],
-                'type': 'VM'
+                'type': 'TEST'
             },
             {
                 'name': 'networks',
-                'endpoint': 'one.vnpool.info',
+                'endpoint': 'one.test.endpoint',
                 'options': [-2, -1, -1],
-                'type': 'VNET'
+                'type': 'TEST'
+            },
+            {
+                'name': 'hosts',
+                'endpoint': 'one.test.endpoint',
+                'options': [-2, -1, -1],
+                'type': 'TEST'
             }
         ]
         template_label_filters = ['filter', 'list']
         open_nebula = 'default'
         test_session = 'session'
         mock_session.return_value = test_session
-        mock_get_objects.side_effect = ['obj1', 'obj2']
+        mock_get_objects.side_effect = ['obj1', 'obj2', 'obj3']
+        mock_add_wilds.return_value = ['wild1', 'wild2']
 
         expected_result = {
             'vms': 'obj1',
             'networks': 'obj2',
+            'hosts': 'obj3',
+            'wilds': ['wild1', 'wild2'],
             'hostname': 'test.com'
         }
 

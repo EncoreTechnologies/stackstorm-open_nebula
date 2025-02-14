@@ -1,3 +1,6 @@
+## 1.1.4
+- Adds wilds to data get action
+
 ## 1.1.3
 - Added actions for looking up attributes on datastores
 
