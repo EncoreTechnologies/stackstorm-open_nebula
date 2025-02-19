@@ -86,6 +86,9 @@ class DataGetAll(BaseAction):
             'VNET': self.update_network
         }
 
+        # Get correct update function
+        update_function = update_functions.get(object_type)
+
         # Get the update function based on object type
         for i, obj in enumerate(objects):
             # Convert zone names to CSV format
@@ -94,7 +97,6 @@ class DataGetAll(BaseAction):
             if object_type not in update_functions.keys():
                 continue
 
-            update_function = update_functions.get(object_type)
             objects[i] = update_function(objects[i])
 
         return objects
@@ -165,6 +167,24 @@ class DataGetAll(BaseAction):
         else:
             return obj
 
+    def add_wilds(self, hosts):
+        result = []
+        for host in hosts:
+            # continue to next host if no wilds are found
+            if 'vm' not in host['template']:
+                continue
+
+            # Convert instances of single wilds to lists
+            wilds = host['template']['vm']
+            if isinstance(wilds, dict):
+                wilds = [wilds]
+
+            # Add all wilds to our list of vm objects
+            for wild in wilds:
+                result.append(wild['vm_name'])
+
+        return result
+
     def run(self, api_config, template_label_filters, open_nebula=None):
         self.session = self.xmlrpc_session_create(open_nebula)
         self.template_label_filters = template_label_filters
@@ -173,6 +193,9 @@ class DataGetAll(BaseAction):
         for config in api_config:
             objects = self.get_objects(config['endpoint'], config['options'], config['type'])
             all_objs[config['name']] = objects
+
+        # Add wilds from host data to separate object
+        all_objs['wilds'] = self.add_wilds(all_objs['hosts'])
 
         # Add hostname to data
         conn = self._get_connection_info(open_nebula)

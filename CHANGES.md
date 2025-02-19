@@ -1,3 +1,6 @@
+## 1.1.5
+- Adds wilds to data get action
+
 ## 1.1.4
 - Fixed CI tests
 
