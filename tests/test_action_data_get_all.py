@@ -232,7 +232,8 @@ class DataGetAllTestCase(OneBaseActionTestCase):
             'networks': 'obj2',
             'hosts': 'obj3',
             'wilds': ['wild1', 'wild2'],
-            'hostname': 'test.com'
+            'hostname': 'test.com',
+            'hypervisor_type': 'open_nebula'
         }
 
         result = action.run(api_config, template_label_filters, open_nebula)

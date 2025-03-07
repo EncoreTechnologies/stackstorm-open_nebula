@@ -200,5 +200,6 @@ class DataGetAll(BaseAction):
         # Add hostname to data
         conn = self._get_connection_info(open_nebula)
         all_objs['hostname'] = conn['host']
+        all_objs['hypervisor_type'] = "open_nebula"
 
         return all_objs

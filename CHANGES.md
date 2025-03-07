@@ -1,3 +1,6 @@
+## 1.1.6
+- Adds hypervisor type to data get action
+
 ## 1.1.5
 - Adds wilds to data get action
 
