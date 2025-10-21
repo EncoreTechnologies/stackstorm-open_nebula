@@ -1,3 +1,6 @@
+## 1.1.7
+- Added action to get list of VMs with given label
+
 ## 1.1.6
 - Adds hypervisor type to data get action
 
