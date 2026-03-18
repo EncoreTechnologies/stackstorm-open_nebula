@@ -1,4 +1,4 @@
-# stackstorm-open_nebulaA
+# stackstorm-open_nebula
 StackStorm integration pack for Open Nebula
 
 This pack integrates with Open Nebula and allows for the creation and management of objects.
