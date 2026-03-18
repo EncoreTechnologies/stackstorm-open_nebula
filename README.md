@@ -67,6 +67,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  cluster_host_count  |  Retrieves all of the hosts from each cluster on an Open Nebula system  |
 |  cluster_vm_count  |  Return an object containing each cluster with the number of VMs on each one  |
 |  clusters_get  |  Retrieves information for all the clusters in the pool or the given clusters if any IDs are passed  |
+|  connection_test  |  Test the connection to the Open Nebula instance  |
 |  data_get_all  |  Gathers all data for all VMs in Open Nebula  |
 |  datastore_attribute_get  |  Return the value of the given attribute from the datastore  |
 |  datastores_attribute_get  |  Return the value of the given attribute from the datastores  |

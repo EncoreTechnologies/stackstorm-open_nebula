@@ -1,3 +1,6 @@
+## 1.1.8
+- Added action to test python connection with given credentials
+
 ## 1.1.7
 - Added action to get list of VMs with given label
 

@@ -1,0 +1,13 @@
+---
+name: connection_test
+runner_type: python-script
+description: Test the connection to the Open Nebula instance.
+enabled: true
+entry_point: connection_test.py
+parameters:
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
