@@ -15,7 +15,6 @@
 
 from lib.action_base import BaseAction
 from dict2xml import dict2xml
-import json
 
 
 class TemplateSchedReqUpdate(BaseAction):
