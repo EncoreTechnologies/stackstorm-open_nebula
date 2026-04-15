@@ -1,3 +1,7 @@
+## 1.1.9
+- Updated vm_bestfit action to select least utilized host based on memory rather than VM count
+- Updated get_by_name actions to handle edge cases where names have whitespace in Open Nebula
+
 ## 1.1.8
 - Added action to test python connection with given credentials
 

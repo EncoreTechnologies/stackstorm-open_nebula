@@ -63,6 +63,69 @@ class TemplateGetByNameTestCase(OneBaseActionTestCase):
         mock_one.templatepool.info.assert_called_with(-2, -1, -1, -1)
 
     @mock.patch("lib.action_base.BaseAction.pyone_session_create")
+    def test_run_whitespace_fallback(self, mock_session):
+        action = self.get_action_instance(self._config_good)
+
+        # Define test parameters - template has trailing whitespace in Open Nebula
+        template_name = "temp2"
+        mock_temp1 = mock.Mock()
+        mock_temp2 = mock.Mock()
+        mock_temp1.NAME = "temp1"
+        mock_temp1.ID = 78
+        mock_temp1.TEMPLATE = {"KEY": "VALUE"}
+        mock_temp2.NAME = "temp2 "
+        mock_temp2.ID = 79
+        mock_temp2.TEMPLATE = {"KEY": "VALUE"}
+
+        test_temps = [mock_temp1, mock_temp2]
+        open_nebula = "default"
+        expected_result = {
+            "KEY": "VALUE",
+            "ID": 79,
+            "NAME": "temp2 "
+        }
+
+        # Mock one object and run action
+        mock_info = mock.Mock()
+        mock_info.VMTEMPLATE = test_temps
+        mock_one = mock.Mock()
+        mock_one.templatepool.info.return_value = mock_info
+        mock_session.return_value = mock_one
+        result = action.run(template_name, open_nebula)
+
+        # Verify result and calls
+        self.assertEqual(expected_result, result)
+        mock_session.assert_called_with(open_nebula)
+        mock_one.templatepool.info.assert_called_with(-2, -1, -1, -1)
+
+    @mock.patch("lib.action_base.BaseAction.pyone_session_create")
+    def test_run_whitespace_fallback_multiple_matches(self, mock_session):
+        action = self.get_action_instance(self._config_good)
+
+        # Define test parameters - multiple templates match after stripping
+        template_name = "temp2"
+        mock_temp1 = mock.Mock()
+        mock_temp2 = mock.Mock()
+        mock_temp1.NAME = "temp2 "
+        mock_temp1.ID = 78
+        mock_temp1.TEMPLATE = {"KEY": "VALUE"}
+        mock_temp2.NAME = " temp2"
+        mock_temp2.ID = 79
+        mock_temp2.TEMPLATE = {"KEY": "VALUE"}
+
+        test_temps = [mock_temp1, mock_temp2]
+        open_nebula = "default"
+
+        # Mock one object and run action
+        mock_info = mock.Mock()
+        mock_info.VMTEMPLATE = test_temps
+        mock_one = mock.Mock()
+        mock_one.templatepool.info.return_value = mock_info
+        mock_session.return_value = mock_one
+        with self.assertRaises(Exception):
+            action.run(template_name, open_nebula)
+
+    @mock.patch("lib.action_base.BaseAction.pyone_session_create")
     def test_run_not_found(self, mock_session):
         action = self.get_action_instance(self._config_good)
 

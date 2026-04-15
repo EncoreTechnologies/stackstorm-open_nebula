@@ -36,6 +36,20 @@ parameters:
               "scsi_bus": "string"
            }]'
         required: false
+    exclude_vm_ids:
+        type: array
+        items:
+          type: string
+        description: "List of VM IDs whose current hosts should be excluded from selection"
+        required: false
+    host_strategy:
+        type: string
+        description: "Strategy for selecting the best host. Options: vm_count (fewest VMs), cpu (lowest CPU usage), memory (lowest memory usage)"
+        default: "memory"
+        enum:
+          - 'vm_count'
+          - 'cpu'
+          - 'memory'
     open_nebula:
         type: string
         description: >
