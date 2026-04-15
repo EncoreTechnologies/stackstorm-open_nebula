@@ -1,0 +1,38 @@
+---
+name: template_sched_req_update
+runner_type: python-script
+description: Update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates. Replace cluster, host, and datastore IDs with names and/or replace them with the given params
+enabled: true
+entry_point: template_sched_req_update.py
+parameters:
+    cluster_name:
+        type: string
+        description: Name of the cluster to add/update to SCHED_REQUIREMENTS
+        required: false
+    datastore_name:
+        type: string
+        description: Name of the datastore to add/update to SCHED_DS_REQUIREMENTS
+        required: false
+    host_name:
+        type: string
+        description: Name of the host to add/update to SCHED_REQUIREMENTS
+        required: false
+    noop:
+        type: boolean
+        description: If true, then the action will go through all the steps but won't actually update the template in Open Nebula
+        required: false
+        default: false
+    template_id:
+        type: integer
+        description: ID of the template to update (ID or name is required)
+        required: false
+    template_name:
+        type: string
+        description: Name of the template to update (ID or name is required)
+        required: false
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~

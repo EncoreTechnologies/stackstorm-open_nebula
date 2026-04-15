@@ -1,0 +1,22 @@
+---
+name: templates_object_backup
+runner_type: python-script
+description: Save a copy of all or a subset of templates to the given directory
+enabled: true
+entry_point: templates_object_backup.py
+parameters:
+    backup_dir:
+        type: string
+        description: Directory where the backup files will be stored. If not provided, defaults to 'backup' within this pack's folder.
+        required: false
+        default: "/opt/stackstorm/packs/open_nebula/backup"
+    template_ids:
+        type: array
+        description: List of template IDs to back up. If not provided, all templates will be backed up.
+        required: false
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured Open Nebula connection details
+        required: false
+        default: ~
