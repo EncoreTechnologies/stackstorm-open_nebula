@@ -1,3 +1,7 @@
+## 1.2.0
+- Added action templates_object_backup to save a copy of all or a subset of templates to the given directory
+- Added action template_sched_req_update to update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates
+
 ## 1.1.9
 - Updated vm_bestfit action to select least utilized host based on memory rather than VM count
 - Updated get_by_name actions to handle edge cases where names have whitespace in Open Nebula
