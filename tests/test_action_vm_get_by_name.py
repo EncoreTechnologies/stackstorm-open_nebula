@@ -51,3 +51,85 @@ class VmGetByNameTestCase(OneBaseActionTestCase):
         self.assertEqual(expected_result, result)
         mock_session.assert_called_with(open_nebula)
         mock_one.vmpool.infoextended.assert_called_with(-2, -1, -1, -1, filter)
+
+    @mock.patch("lib.action_base.BaseAction.pyone_session_create")
+    def test_run_whitespace_fallback(self, mock_session):
+        action = self.get_action_instance(self._config_good)
+
+        # Define test parameters - VM has trailing whitespace in Open Nebula
+        vm_name = 'test-vm.com'
+        filter = 'VM.NAME=' + vm_name
+        open_nebula = 'default'
+        expected_result = ['VM1']
+
+        # Mock filtered call returning empty, unfiltered call returning match
+        mock_vm1 = mock.Mock()
+        mock_vm1.NAME = 'test-vm.com '
+        mock_vm1.TEMPLATE = 'VM1'
+
+        mock_vmpool_empty = mock.Mock()
+        mock_vmpool_empty.VM = []
+        mock_vmpool_all = mock.Mock()
+        mock_vmpool_all.VM = [mock_vm1]
+
+        mock_one = mock.Mock()
+        mock_one.vmpool.infoextended.side_effect = [mock_vmpool_empty, mock_vmpool_all]
+        mock_session.return_value = mock_one
+        result = action.run(vm_name, open_nebula)
+
+        # Verify result and calls
+        self.assertEqual(expected_result, result)
+        mock_session.assert_called_with(open_nebula)
+        mock_one.vmpool.infoextended.assert_any_call(-2, -1, -1, -1, filter)
+        mock_one.vmpool.infoextended.assert_any_call(-2, -1, -1, -1)
+
+    @mock.patch("lib.action_base.BaseAction.pyone_session_create")
+    def test_run_whitespace_fallback_multiple_matches(self, mock_session):
+        action = self.get_action_instance(self._config_good)
+
+        # Define test parameters - multiple VMs match after stripping
+        vm_name = 'test-vm.com'
+        filter = 'VM.NAME=' + vm_name
+        open_nebula = 'default'
+
+        # Mock filtered call returning empty, unfiltered call returning multiple matches
+        mock_vm1 = mock.Mock()
+        mock_vm1.NAME = 'test-vm.com '
+        mock_vm1.TEMPLATE = 'VM1'
+        mock_vm2 = mock.Mock()
+        mock_vm2.NAME = ' test-vm.com'
+        mock_vm2.TEMPLATE = 'VM2'
+
+        mock_vmpool_empty = mock.Mock()
+        mock_vmpool_empty.VM = []
+        mock_vmpool_all = mock.Mock()
+        mock_vmpool_all.VM = [mock_vm1, mock_vm2]
+
+        mock_one = mock.Mock()
+        mock_one.vmpool.infoextended.side_effect = [mock_vmpool_empty, mock_vmpool_all]
+        mock_session.return_value = mock_one
+        with self.assertRaises(Exception):
+            action.run(vm_name, open_nebula)
+
+    @mock.patch("lib.action_base.BaseAction.pyone_session_create")
+    def test_run_not_found(self, mock_session):
+        action = self.get_action_instance(self._config_good)
+
+        # Define test parameters - no VMs found by filter or fallback
+        vm_name = 'nonexistent-vm.com'
+        filter = 'VM.NAME=' + vm_name
+        open_nebula = 'default'
+        expected_result = []
+
+        # Mock both calls returning empty
+        mock_vmpool_empty = mock.Mock()
+        mock_vmpool_empty.VM = []
+
+        mock_one = mock.Mock()
+        mock_one.vmpool.infoextended.return_value = mock_vmpool_empty
+        mock_session.return_value = mock_one
+        result = action.run(vm_name, open_nebula)
+
+        # Verify result and calls
+        self.assertEqual(expected_result, result)
+        mock_session.assert_called_with(open_nebula)

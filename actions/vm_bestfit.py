@@ -25,26 +25,55 @@ class BestFit(BaseAction):
         """
         super(BestFit, self).__init__(config)
 
-    def get_host(self, cluster):
-        """Return a host from the given cluster that's powered on and has the least number of VMs
+    def get_host(self, cluster, exclude_vm_ids=None, host_strategy='vm_count'):
+        """Return a host from the given cluster that's powered on and best-fit
+        based on the given strategy. Optionally exclude hosts running specific VMs.
         """
         host_obj = None
-        least_vms = None
+        best_score = None
 
         for host_id in cluster.HOSTS.ID:
             host = self.one.host.info(host_id)
             # Need to verify that the host is on and connected (STATE 2 = MONITORED)
             # https://docs.opennebula.io/6.8/integration_and_development/references/host_states.html
-            if (host.STATE == 2):
-                # Find the host that has the least number of VMs on it
-                if (least_vms is None or len(host.VMS.ID) < least_vms):
-                    host_obj = host
-                    least_vms = len(host.VMS.ID)
+            if host.STATE != 2:
+                continue
+
+            # Skip hosts running any of the excluded VMs
+            if exclude_vm_ids:
+                host_vm_ids = host.VMS.ID
+                if not isinstance(host_vm_ids, list):
+                    host_vm_ids = [host_vm_ids]
+                host_vm_ids = [str(vid) for vid in host_vm_ids]
+                exclude_ids_str = [str(vid) for vid in exclude_vm_ids]
+                if any(vm_id in host_vm_ids for vm_id in exclude_ids_str):
+                    continue
+
+            score = self._get_host_score(host, host_strategy)
+            if best_score is None or score < best_score:
+                host_obj = host
+                best_score = score
 
         if host_obj is not None:
             return host_obj
         else:
             raise Exception("No available hosts found for cluster: {}".format(cluster.NAME))
+
+    def _get_host_score(self, host, strategy):
+        """Return a numeric score for the host based on the given strategy.
+        Lower score = better fit.
+        """
+        if strategy == 'cpu':
+            cpu_usage = int(host.HOST_SHARE.CPU_USAGE)
+            max_cpu = int(host.HOST_SHARE.MAX_CPU)
+            return cpu_usage / max_cpu if max_cpu > 0 else float('inf')
+        elif strategy == 'memory':
+            mem_usage = int(host.HOST_SHARE.MEM_USAGE)
+            max_mem = int(host.HOST_SHARE.MAX_MEM)
+            return mem_usage / max_mem if max_mem > 0 else float('inf')
+        else:
+            # Default: vm_count
+            return len(host.VMS.ID)
 
     def get_storage(self, cluster, datastore_filter_strategy, datastore_filter, disks):
         """Return a datastore on the host that is either specified in the disks variable or
@@ -105,11 +134,11 @@ class BestFit(BaseAction):
         return default_return
 
     def run(self, cluster_name, datastore_filter_strategy, datastore_filter_regex_list,
-            disks, open_nebula=None):
+            disks, exclude_vm_ids=None, host_strategy='vm_count', open_nebula=None):
         """
         Returns a host and datastore name and ID from the given cluster and filters.
-        The result host will be the one with the least amount of VMs and the result
-        datastore will be the one with the most free space
+        The result host will be selected based on the given strategy and the result
+        datastore will be the one with the most free space.
         """
         # Create pyone session
         self.one = self.pyone_session_create(open_nebula)
@@ -125,8 +154,11 @@ class BestFit(BaseAction):
         if not cluster:
             raise Exception('No cluster found with the given name: ' + cluster_name)
 
-        # Return a host from the given cluster that's powered on and has the least amount of VMs
-        host = self.get_host(cluster)
+        # Return a host from the given cluster that's powered on and best-fit
+        host = self.get_host(cluster, exclude_vm_ids, host_strategy)
+
+        # Calculate host usage percentage for the selected strategy
+        host_usage_percent = round(self._get_host_score(host, host_strategy) * 100, 2)
 
         # Return a datastore on the host that is either specified in the disks variable or
         # has the most free space and a name that doesn't match any filters
@@ -138,5 +170,6 @@ class BestFit(BaseAction):
         return {'clusterName': cluster.NAME,
                 'hostName': host.NAME,
                 'hostID': host.ID,
+                'hostUsagePercent': host_usage_percent,
                 'datastoreName': datastore.NAME,
                 'datastoreID': datastore.ID}
