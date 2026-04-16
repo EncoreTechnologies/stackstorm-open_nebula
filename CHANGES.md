@@ -1,3 +1,6 @@
+## 1.2.1
+- Added action template_image_datastore_get that retrieves the images on a template and returns the datastore(s) they are on 
+
 ## 1.2.0
 - Added action templates_object_backup to save a copy of all or a subset of templates to the given directory
 - Added action template_sched_req_update to update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates

@@ -80,6 +80,7 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  template_clone  |  Clones an existing virtual machine template  |
 |  template_delete  |  Deletes the given template from the pool  |
 |  template_disks_get  |  Return a list of disks on the given template  |
+|  template_image_datastore_get  |  Retrieves the images on a template and returns the datastore(s) they are on  |
 |  template_get_by_name  |  Retrieves the given template by name on an Open Nebula system  |
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
 |  template_sched_req_update  |  Update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates  |
