@@ -1,5 +1,13 @@
+## 1.2.1
+- Added action vnet_ip_lease_check to verify IP is not already leased in OpenNebula vnet
+
+## 1.2.0
+- Added action templates_object_backup to save a copy of all or a subset of templates to the given directory
+- Added action template_sched_req_update to update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates
+
 ## 1.1.9
-- Added actions to check IP lease in vnet
+- Updated vm_bestfit action to select least utilized host based on memory rather than VM count
+- Updated get_by_name actions to handle edge cases where names have whitespace in Open Nebula
 
 ## 1.1.8
 - Added action to test python connection with given credentials

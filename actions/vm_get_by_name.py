@@ -26,4 +26,17 @@ class VmGetByName(BaseAction):
         vmpoolInfo = one.vmpool.infoextended(-2, -1, -1, -1, filter)
         vms = vmpoolInfo.VM
 
-        return [vm.TEMPLATE for vm in vms]
+        if vms:
+            return [vm.TEMPLATE for vm in vms]
+
+        # Fallback: try matching by stripped name in case of whitespace in Open Nebula
+        allVmsInfo = one.vmpool.infoextended(-2, -1, -1, -1)
+        all_vms = allVmsInfo.VM
+
+        matches = [vm for vm in all_vms if vm.NAME.strip() == vm_name]
+
+        if len(matches) > 1:
+            raise Exception("Multiple VMs found matching '{}' "
+                            "after stripping whitespace".format(vm_name))
+
+        return [vm.TEMPLATE for vm in matches]

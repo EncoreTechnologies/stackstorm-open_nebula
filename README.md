@@ -82,8 +82,10 @@ More information on the XML-RPC API methods: https://docs.opennebula.io/6.6/inte
 |  template_disks_get  |  Return a list of disks on the given template  |
 |  template_get_by_name  |  Retrieves the given template by name on an Open Nebula system  |
 |  template_instantiate  |  Instantiates a new virtual machine from a given template ID  |
+|  template_sched_req_update  |  Update the SCHED_REQUIREMENTS and/or SCHED_DS_REQUIREMENTS of Open Nebula templates  |
 |  templates_get  |  Retrieves information for all or part of the templates in the pool or the given templates if any IDs are passed  |
 |  templates_get_with_label  |  Retrieves a list of templates that have the given label  |
+|  templates_object_backup  |  Save a copy of all or a subset of templates to the given directory  |
 |  users_get  |  Retrieves information for all the users in the pool or the given users if any IDs are passed  |
 |  vm_action_submit  |  Run the given onevm action on the given VM. Each onevm action that this can run also has it's own corresponding ST2 action in this pack  |
 |  vm_attribute_get  |  Return the value of the given attribute from the VM  |

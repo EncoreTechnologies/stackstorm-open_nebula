@@ -35,4 +35,19 @@ class TemplateGetByName(BaseAction):
                 return_obj['NAME'] = temp.NAME
                 return return_obj
 
+        # Fallback: try matching by stripped name in case of whitespace in Open Nebula
+        matches = []
+        for temp in temps:
+            if temp.NAME.strip() == template_name:
+                matches.append(temp)
+
+        if len(matches) == 1:
+            return_obj = matches[0].TEMPLATE
+            return_obj['ID'] = matches[0].ID
+            return_obj['NAME'] = matches[0].NAME
+            return return_obj
+        elif len(matches) > 1:
+            raise Exception("ERROR: Multiple templates found matching '{}' "
+                            "after stripping whitespace".format(template_name))
+
         raise Exception("ERROR: No templates found with name: " + template_name)
