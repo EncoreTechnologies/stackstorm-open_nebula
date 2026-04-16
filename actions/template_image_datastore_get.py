@@ -71,7 +71,6 @@ class TemplateImageDatastoreGet(BaseAction):
                 if 'IMAGE' in disk_info and 'DATASTORE' in disk_info['IMAGE']:
                     datastore_name = disk_info['IMAGE']['DATASTORE']
                     if datastore_name not in datastore_disk_hash:
-                        #datastore_disk_hash[datastore_name] = []
                         datastore_disk_hash[datastore_name] = {
                             'datastore_id': self.datastore_id_get(datastore_name, one_session),
                             'disk_ids': []
