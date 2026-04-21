@@ -66,7 +66,7 @@ class VnetIpLeaseCheck(BaseAction):
         # Find the target vnet by name
         target_vnet = None
         for vnet in vnets:
-            if vnet.get('NAME') == vnet_name:
+            if vnet.get('NAME', '').lower() == vnet_name.lower():
                 target_vnet = vnet
                 break
 
