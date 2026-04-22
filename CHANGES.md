@@ -1,5 +1,8 @@
+## 1.2.2
+- Added action vnet_ip_lease_check to verify IP is not already leased in OpenNebula vnet
+
 ## 1.2.1
-- Added action template_image_datastore_get that retrieves the images on a template and returns the datastore(s) they are on 
+- Added action template_image_datastore_get that retrieves the images on a template and returns the datastore(s) they are on
 
 ## 1.2.0
 - Added action templates_object_backup to save a copy of all or a subset of templates to the given directory

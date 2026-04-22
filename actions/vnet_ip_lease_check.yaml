@@ -1,0 +1,20 @@
+---
+name: vnet_ip_lease_check
+runner_type: python-script
+description: Check if an IP address is already leased in an OpenNebula virtual network
+enabled: true
+entry_point: vnet_ip_lease_check.py
+parameters:
+    ip_address:
+        type: string
+        description: The IP address to check for existing lease
+        required: true
+    vnet_name:
+        type: string
+        description: The virtual network name to check leases in
+        required: true
+    open_nebula:
+        type: string
+        description: Pre-Configured OpenNebula connection details
+        required: false
+        default: ~
