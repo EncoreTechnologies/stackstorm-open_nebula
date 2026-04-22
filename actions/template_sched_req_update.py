@@ -171,15 +171,20 @@ class TemplateSchedReqUpdate(BaseAction):
             result['messages'] += "Cluster IDs were found and replaced with cluster names. "
 
         # After cluster IDs are replaced, check if cluster_name is already in SCHED_REQUIREMENTS and add or replace it
+        cluster_req = 'foo'
         if cluster_name:
             cluster_req = 'CLUSTER = "' + cluster_name + '"'
-            # Check if cluster requirements need to be replaced
-            for s in sched_reqs:
-                if "CLUSTER" in s:
-                    if cluster_name not in s:
-                        result['messages'] += "Cluster requirement replaced with '" + cluster_req + "'. "
-                        sched_reqs.remove(s)
-                        sched_reqs.append(cluster_req)
+            if sched_reqs == []:
+                sched_reqs.append(cluster_req)
+                result['messages'] += "Adding cluster requirement: '" + cluster_req + "'. "
+            else:
+                # Check if cluster requirements need to be replaced
+                for s in sched_reqs:
+                    if "CLUSTER" in s:
+                        if cluster_name not in s:
+                            result['messages'] += "Cluster requirement replaced with '" + cluster_req + "'. "
+                            sched_reqs.remove(s)
+                            sched_reqs.append(cluster_req)
 
         # Check if cluster ID is already in SCHED_REQUIREMENTS and if so, change it to cluster_name
         sched_reqs, replaced = self.replace_host_ids(sched_reqs, one)
@@ -189,13 +194,17 @@ class TemplateSchedReqUpdate(BaseAction):
         # After host IDs are replaced, check if host_name is already in SCHED_REQUIREMENTS and add or replace it
         if host_name:
             host_req = 'NAME = "' + host_name + '"'
-            # Check if host requirements need to be replaced
-            for s in sched_reqs:
-                if "NAME" in s:
-                    if host_name not in s:
-                        result['messages'] += "Host requirement replaced with '" + host_req + "'. "
-                        sched_reqs.remove(s)
-                        sched_reqs.append(host_req)
+            if sched_reqs == [cluster_req]:
+                sched_reqs.append(host_req)
+                result['messages'] += "Adding host requirement: '" + host_req + "'. "
+            else:
+                # Check if host requirements need to be replaced
+                for s in sched_reqs:
+                    if "NAME" in s:
+                        if host_name not in s:
+                            result['messages'] += "Host requirement replaced with '" + host_req + "'. "
+                            sched_reqs.remove(s)
+                            sched_reqs.append(host_req)
 
         result['sched_requirements_new'] = ' & '.join(sched_reqs)
 
@@ -214,13 +223,17 @@ class TemplateSchedReqUpdate(BaseAction):
         # After datastore IDs are replaced, check if datastore_name is already in SCHED_DS_REQUIREMENTS and add or replace it
         if datastore_name:
             datastore_req = 'NAME = "' + datastore_name + '"'
-            # Check if datastore requirements need to be replaced
-            for s in sched_ds_reqs:
-                if "NAME" in s:
-                    if datastore_name not in s:
-                        result['messages'] += "Datastore requirement replaced with '" + datastore_req + "'. "
-                        sched_ds_reqs.remove(s)
-                        sched_ds_reqs.append(datastore_req)
+            if sched_ds_reqs == []:
+                sched_ds_reqs.append(datastore_req)
+                result['messages'] += "Adding datastore requirement: '" + datastore_req + "'. "
+            else:
+                # Check if datastore requirements need to be replaced
+                for s in sched_ds_reqs:
+                    if "NAME" in s:
+                        if datastore_name not in s:
+                            result['messages'] += "Datastore requirement replaced with '" + datastore_req + "'. "
+                            sched_ds_reqs.remove(s)
+                            sched_ds_reqs.append(datastore_req)
 
         result['sched_ds_requirements_new'] = ' & '.join(sched_ds_reqs)
 
