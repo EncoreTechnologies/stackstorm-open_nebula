@@ -25,6 +25,18 @@ class BestFit(BaseAction):
         """
         super(BestFit, self).__init__(config)
 
+    def validate_host(self, cluster, host_name):
+        for host_id in cluster.HOSTS.ID:
+            host = self.one.host.info(host_id)
+            if host.NAME == host_name:
+                if host.STATE != 2:
+                    raise Exception(
+                        "Host {} is not available (STATE={}, expected 2/MONITORED)".format(
+                            host_name, host.STATE))
+                return host
+        raise Exception(
+            "Host {} not found in cluster {}".format(host_name, cluster.NAME))
+
     def get_host(self, cluster, exclude_vm_ids=None, host_strategy='vm_count'):
         """Return a host from the given cluster that's powered on and best-fit
         based on the given strategy. Optionally exclude hosts running specific VMs.
@@ -134,7 +146,8 @@ class BestFit(BaseAction):
         return default_return
 
     def run(self, cluster_name, datastore_filter_strategy, datastore_filter_regex_list,
-            disks, exclude_vm_ids=None, host_strategy='vm_count', open_nebula=None):
+            disks, exclude_vm_ids=None, host_strategy='vm_count', host_name=None,
+            open_nebula=None):
         """
         Returns a host and datastore name and ID from the given cluster and filters.
         The result host will be selected based on the given strategy and the result
@@ -154,8 +167,10 @@ class BestFit(BaseAction):
         if not cluster:
             raise Exception('No cluster found with the given name: ' + cluster_name)
 
-        # Return a host from the given cluster that's powered on and best-fit
-        host = self.get_host(cluster, exclude_vm_ids, host_strategy)
+        if host_name:
+            host = self.validate_host(cluster, host_name)
+        else:
+            host = self.get_host(cluster, exclude_vm_ids, host_strategy)
 
         # Calculate host usage percentage for the selected strategy
         host_usage_percent = round(self._get_host_score(host, host_strategy) * 100, 2)
