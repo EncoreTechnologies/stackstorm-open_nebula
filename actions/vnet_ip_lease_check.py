@@ -95,7 +95,8 @@ class VnetIpLeaseCheck(BaseAction):
 
         # Search through all address ranges for the IP
         for ar in address_ranges:
-            leases = ar.get('LEASES', {}).get('LEASE', [])
+            leases = ar['LEASES'] if 'LEASES' in ar and ar['LEASES'] else {}
+            leases = leases['LEASE'] if 'LEASE' in leases and leases['LEASE'] else []
 
             # Handle single lease case
             if isinstance(leases, dict):
