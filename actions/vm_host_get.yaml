@@ -1,0 +1,19 @@
+---
+name: vm_host_get
+runner_type: python-script
+description: >
+    Get the name of the host that a VM is currently running on.
+    Returns the host name if found, or null if not found on any host.
+enabled: true
+entry_point: vm_host_get.py
+parameters:
+    vm_id:
+        type: integer
+        description: ID of the VM to find
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

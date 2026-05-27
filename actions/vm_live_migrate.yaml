@@ -1,0 +1,22 @@
+---
+name: vm_live_migrate
+runner_type: python-script
+description: >
+    Live migrate a VM to the specified host without shutting it down
+enabled: true
+entry_point: vm_live_migrate.py
+parameters:
+    vm_id:
+        type: integer
+        description: ID of the VM to migrate
+        required: true
+    host_id:
+        type: integer
+        description: ID of the target host to migrate the VM to
+        required: true
+    open_nebula:
+        type: string
+        description: >
+            Pre-Configured ON connection details
+        required: false
+        default: ~

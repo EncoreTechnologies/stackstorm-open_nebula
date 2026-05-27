@@ -1,3 +1,6 @@
+## 1.2.3
+- Added new actions for live migrating VMs and getting a VM's host
+
 ## 1.2.2
 - Added action vnet_ip_lease_check to verify IP is not already leased in OpenNebula vnet
 

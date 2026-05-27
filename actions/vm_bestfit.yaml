@@ -50,6 +50,10 @@ parameters:
           - 'vm_count'
           - 'cpu'
           - 'memory'
+    host_name:
+        type: string
+        description: "Override automatic host selection by specifying a host name. The host must exist in the cluster and be in MONITORED state."
+        required: false
     open_nebula:
         type: string
         description: >
